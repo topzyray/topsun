@@ -2,9 +2,9 @@ name: CI/CD – Next.js + Vercel for Topsun
 
 on:
   push:
-    branches: [develop]
+    branches: [main]
   pull_request:
-    branches: [develop]
+    branches: [main]
 
 jobs:
   build-test:
