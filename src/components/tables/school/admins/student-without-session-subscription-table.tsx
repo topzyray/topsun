@@ -1,0 +1,461 @@
+"use client";
+
+import * as React from "react";
+import {
+  ColumnDef,
+  ColumnFiltersState,
+  SortingState,
+  VisibilityState,
+  flexRender,
+  getCoreRowModel,
+  getFilteredRowModel,
+  getPaginationRowModel,
+  getSortedRowModel,
+  useReactTable,
+} from "@tanstack/react-table";
+import { ArrowUpDown, ChevronDown, MoreHorizontal } from "lucide-react";
+
+import { Button } from "@/components/ui/button";
+import {
+  DropdownMenu,
+  DropdownMenuCheckboxItem,
+  DropdownMenuContent,
+  DropdownMenuItem,
+  DropdownMenuLabel,
+  DropdownMenuSeparator,
+  DropdownMenuTrigger,
+} from "@/components/ui/dropdown-menu";
+import { Input } from "@/components/ui/input";
+import {
+  Table,
+  TableBody,
+  TableCell,
+  TableHead,
+  TableHeader,
+  TableRow,
+} from "@/components/ui/table";
+import { Student } from "../../../../../types";
+import { Checkbox } from "../../../ui/checkbox";
+import { CircularLoader } from "../../../loaders/page-level-loader";
+import { StudentApiService } from "@/api/services/StudentApiService";
+import { debounce } from "@/utils/debounce";
+import { handlePageChange } from "@/utils/pagination-utils";
+import { useCustomQuery } from "@/api/hooks/queries/use-query.hook";
+import { extractErrorMessage } from "@/utils/extract-error-utils";
+import { TextHelper } from "@/helpers/TextHelper";
+import SubmitButton from "@/components/buttons/SubmitButton";
+import { useCustomMutation } from "@/api/hooks/queries/use-mutation.hook";
+import { AdminApiService } from "@/api/services/AdminApiService";
+import { useQueryClient } from "@tanstack/react-query";
+import { GlobalContext } from "@/providers/global-state-provider";
+
+const ActionCell = ({ row }: { row: any }) => {
+  const Session = row.original;
+
+  return (
+    <div className="flex items-center gap-3">
+      <DropdownMenu>
+        <DropdownMenuTrigger asChild>
+          <Button variant="ghost" className="h-8 w-8 p-0">
+            <span className="sr-only">Open menu</span>
+            <MoreHorizontal />
+          </Button>
+        </DropdownMenuTrigger>
+        <DropdownMenuContent align="end">
+          <DropdownMenuLabel>Actions</DropdownMenuLabel>
+          <DropdownMenuItem
+            onClick={() => navigator.clipboard.writeText(Session._id)}
+            className="cursor-copy"
+          >
+            Copy ID
+          </DropdownMenuItem>
+          <DropdownMenuSeparator />
+        </DropdownMenuContent>
+      </DropdownMenu>
+    </div>
+  );
+};
+
+export const columns: ColumnDef<Student>[] = [
+  {
+    id: "select",
+    header: ({ table }) => (
+      <Checkbox
+        checked={
+          table.getIsAllPageRowsSelected() || (table.getIsSomePageRowsSelected() && "indeterminate")
+        }
+        onCheckedChange={(value) => table.toggleAllPageRowsSelected(!!value)}
+        aria-label="Select all"
+      />
+    ),
+    cell: ({ row }) => (
+      <Checkbox
+        checked={row.getIsSelected()}
+        onCheckedChange={(value) => row.toggleSelected(!!value)}
+        aria-label="Select row"
+      />
+    ),
+    enableSorting: false,
+    enableHiding: false,
+  },
+  {
+    accessorKey: "status",
+    header: "Status",
+    cell: ({ row }) => {
+      const student_status: string = row.getValue("status");
+      let color;
+      switch (student_status) {
+        case "active":
+          color = "text-green-600";
+          break;
+        case "graduated":
+          color = "text-blue-600";
+          break;
+        case "expelled":
+          color = "text-red-600";
+          break;
+        default:
+          color = "";
+          break;
+      }
+
+      return <div className={`capitalize ${color}`}>{student_status}</div>;
+    },
+  },
+  {
+    accessorKey: "is_verified",
+    header: "Verified",
+    cell: ({ row }) => {
+      const student_verification_status: string = row.getValue("is_verified");
+
+      let color = student_verification_status ? "text-green-600" : "text-orange-600";
+      return (
+        <div className={`capitalize ${color}`}>
+          {student_verification_status ? "True" : "False"}
+        </div>
+      );
+    },
+  },
+  {
+    accessorKey: "first_name",
+    header: ({ column }) => {
+      return (
+        <p
+          onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}
+          className="flex max-w-max cursor-pointer items-center gap-2 text-nowrap"
+        >
+          First Name
+          <ArrowUpDown size={16} />
+        </p>
+      );
+    },
+    cell: ({ row }) => (
+      <div className="max-w-max capitalize">
+        {TextHelper.capitalize(row.getValue("first_name"))}
+      </div>
+    ),
+  },
+  {
+    accessorKey: "last_name",
+    header: ({ column }) => {
+      return (
+        <p
+          onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}
+          className="flex max-w-max cursor-pointer items-center gap-2 text-nowrap"
+        >
+          Last Name
+          <ArrowUpDown size={16} />
+        </p>
+      );
+    },
+    cell: ({ row }) => (
+      <div className="max-w-max capitalize">{TextHelper.capitalize(row.getValue("last_name"))}</div>
+    ),
+  },
+  {
+    accessorKey: "email",
+    header: ({ column }) => {
+      return (
+        <p
+          onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}
+          className="flex max-w-max cursor-pointer items-center gap-2 text-nowrap"
+        >
+          Email
+          <ArrowUpDown size={16} />
+        </p>
+      );
+    },
+    cell: ({ row }) => <div className="max-w-max">{row.getValue("email")}</div>,
+  },
+  {
+    accessorKey: "current_class_level",
+    header: ({ column }) => {
+      return (
+        <p
+          onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}
+          className="flex max-w-max cursor-pointer items-center gap-2 text-nowrap"
+        >
+          Previous Class
+          <ArrowUpDown size={16} />
+        </p>
+      );
+    },
+    cell: ({ row }) => <div className="max-w-max">{row.getValue("current_class_level")}</div>,
+  },
+  {
+    accessorKey: "createdAt",
+    header: ({ column }) => {
+      return (
+        <p
+          onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}
+          className="flex max-w-max cursor-pointer items-center gap-2 text-nowrap"
+        >
+          Date Created
+          <ArrowUpDown size={16} />
+        </p>
+      );
+    },
+    cell: ({ row }) => (
+      <div className="text-nowrap capitalize">
+        {TextHelper.getFormattedDate(row.getValue("createdAt"))}
+      </div>
+    ),
+  },
+  {
+    id: "actions",
+    enableHiding: false,
+    accessorKey: "actions",
+    header: ({ column }) => {
+      return (
+        <p className="flex max-w-max cursor-pointer items-center gap-2 text-nowrap">Actions</p>
+      );
+    },
+    cell: ({ row }) => <ActionCell row={row} />,
+  },
+];
+
+export function StudentsWithoutSessionSubscriptionTable() {
+  const [sorting, setSorting] = React.useState<SortingState>([]);
+  const [columnFilters, setColumnFilters] = React.useState<ColumnFiltersState>([]);
+  const [columnVisibility, setColumnVisibility] = React.useState<VisibilityState>({});
+  const [rowSelection, setRowSelection] = React.useState({});
+  const [queryObj, setQueryObj] = React.useState({
+    page: 1,
+    limit: 10,
+    searchParams: "",
+  });
+
+  let { data, isLoading, isError, error } = useCustomQuery(
+    ["studentsNotSubscribed"],
+    StudentApiService.getStudentsThatAreYetToSubscribedToNewSession,
+    queryObj,
+  );
+
+  let metaData = {
+    totalPages:
+      data?.students_yet_to_subscribe_to_new_session?.totalPages !== undefined
+        ? data?.students_yet_to_subscribe_to_new_session?.totalPages
+        : 0,
+    totalCount:
+      data?.students_yet_to_subscribe_to_new_session?.totalCount !== undefined
+        ? data?.students_yet_to_subscribe_to_new_session?.totalCount
+        : 1,
+  };
+
+  data =
+    data?.students_yet_to_subscribe_to_new_session?.studentIds !== undefined &&
+    data?.students_yet_to_subscribe_to_new_session?.studentIds;
+
+  const handleSearchChange = debounce((value: string) => {
+    setQueryObj((prev) => ({
+      ...prev,
+      searchParams: value,
+      page: 1,
+    }));
+  }, 300);
+
+  const updatePage = (newPage: number) => {
+    setQueryObj((prev) => ({ ...prev, page: newPage }));
+  };
+
+  const disableNext = queryObj.page >= metaData.totalPages;
+  const disablePrev = queryObj.page <= 1;
+
+  const table = useReactTable({
+    data,
+    columns,
+    onSortingChange: setSorting,
+    onColumnFiltersChange: setColumnFilters,
+    getCoreRowModel: getCoreRowModel(),
+    getPaginationRowModel: getPaginationRowModel(),
+    getSortedRowModel: getSortedRowModel(),
+    getFilteredRowModel: getFilteredRowModel(),
+    onColumnVisibilityChange: setColumnVisibility,
+    onRowSelectionChange: setRowSelection,
+    state: {
+      sorting,
+      columnFilters,
+      columnVisibility,
+      rowSelection,
+    },
+  });
+
+  const queryClient = useQueryClient();
+  const { activeSessionData } = React.useContext(GlobalContext);
+
+  const { mutate: subscribeStudentToNewSession, isPending: isSubscribingStudentToNewSession } =
+    useCustomMutation(AdminApiService.adminUpdateStudentSessionSubscriptionInASchool, {
+      onSuccessCallback: () => {
+        queryClient.invalidateQueries({ queryKey: ["studentsNotSubscribed"] });
+        queryClient.invalidateQueries({
+          queryKey: ["studentsNotSubscribedById"],
+        });
+        table.getSelectedRowModel().rows.map((row) => row.original).length = 0;
+      },
+    });
+
+  const handleNewSessionSubscription = (data: any) => {
+    const studentIds = data && data.length > 0 && data.map((student: Student) => student._id);
+    subscribeStudentToNewSession({
+      academic_session_id: activeSessionData?.activeSession?._id as string,
+      student_ids_array: studentIds,
+    });
+  };
+
+  return (
+    <div className="w-full">
+      <div className="flex items-center py-4">
+        <Input
+          placeholder="Search"
+          name="searchParams"
+          value={queryObj.searchParams}
+          onChange={(e) => handleSearchChange(e.target.value)}
+          className="max-w-sm"
+        />
+
+        <DropdownMenu>
+          <DropdownMenuTrigger asChild>
+            <Button variant="outline" className="ml-auto">
+              Columns <ChevronDown />
+            </Button>
+          </DropdownMenuTrigger>
+          <DropdownMenuContent align="end">
+            {table
+              .getAllColumns()
+              .filter((column) => column.getCanHide())
+              .map((column) => {
+                return (
+                  <DropdownMenuCheckboxItem
+                    key={column.id}
+                    className="capitalize"
+                    checked={column.getIsVisible()}
+                    onCheckedChange={(value) => column.toggleVisibility(!!value)}
+                  >
+                    {column.id}
+                  </DropdownMenuCheckboxItem>
+                );
+              })}
+          </DropdownMenuContent>
+        </DropdownMenu>
+      </div>
+
+      <div className="rounded-md border">
+        <Table>
+          <TableHeader>
+            {table.getHeaderGroups().map((headerGroup) => (
+              <TableRow key={headerGroup.id}>
+                {headerGroup.headers.map((header) => {
+                  return (
+                    <TableHead key={header.id}>
+                      {header.isPlaceholder
+                        ? null
+                        : flexRender(header.column.columnDef.header, header.getContext())}
+                    </TableHead>
+                  );
+                })}
+              </TableRow>
+            ))}
+          </TableHeader>
+          <TableBody>
+            {table.getRowModel().rows?.length ? (
+              table.getRowModel().rows.map((row) => (
+                <TableRow key={row.id} data-state={row.getIsSelected() && "selected"}>
+                  {row.getVisibleCells().map((cell) => (
+                    <TableCell key={cell.id}>
+                      {flexRender(cell.column.columnDef.cell, cell.getContext())}
+                    </TableCell>
+                  ))}
+                </TableRow>
+              ))
+            ) : isLoading ? (
+              <TableRow>
+                <TableCell colSpan={columns.length} className="h-24 text-center">
+                  <CircularLoader text="Loading students data" />
+                </TableCell>
+              </TableRow>
+            ) : isError ? (
+              <TableRow>
+                <TableCell colSpan={columns.length} className="h-24 text-center text-red-600">
+                  {extractErrorMessage(error)}
+                </TableCell>
+              </TableRow>
+            ) : (
+              <TableRow>
+                <TableCell colSpan={columns.length} className="h-24 text-center">
+                  No student data available.
+                </TableCell>
+              </TableRow>
+            )}
+          </TableBody>
+        </Table>
+      </div>
+
+      {table.getSelectedRowModel().rows.length > 0 && (
+        <Table className="flex justify-start border-b py-2">
+          <TableBody>
+            <TableRow>
+              <SubmitButton
+                loading={isSubscribingStudentToNewSession}
+                disabled={isSubscribingStudentToNewSession}
+                size="lg"
+                variant="success"
+                className="text-white"
+                text="Subscribe All Selected"
+                onSubmit={() =>
+                  handleNewSessionSubscription(
+                    table.getSelectedRowModel().rows.map((row) => row.original),
+                  )
+                }
+              />
+            </TableRow>
+          </TableBody>
+        </Table>
+      )}
+
+      <div className="flex items-center justify-end space-x-2 py-4">
+        <div className="text-muted-foreground flex-1 text-sm">
+          {table.getFilteredSelectedRowModel().rows.length} of{" "}
+          {table.getFilteredRowModel().rows.length} row(s) selected.
+        </div>
+        <div className="space-x-2">
+          <Button
+            variant="outline"
+            size="sm"
+            onClick={() => handlePageChange("prev", queryObj.page, updatePage)}
+            disabled={disablePrev}
+          >
+            Previous
+          </Button>
+          <Button
+            variant="outline"
+            size="sm"
+            onClick={() => handlePageChange("next", queryObj.page, updatePage)}
+            disabled={disableNext}
+          >
+            Next
+          </Button>
+        </div>
+      </div>
+    </div>
+  );
+}
