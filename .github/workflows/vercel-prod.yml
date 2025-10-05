@@ -3,8 +3,6 @@ name: CI/CD – Next.js + Vercel for Topsun
 on:
   push:
     branches: [main]
-  pull_request:
-    branches: [main]
 
 jobs:
   build-test:
@@ -62,6 +60,12 @@ jobs:
       # Build the project (optional if Vercel handles it)
       - name: Build Project
         run: npm run build
+
+      - name: Prepare Vercel Output
+        run: |
+          mkdir -p .vercel/output
+          cp -r .next .vercel/output/
+          cp -r public .vercel/output/
 
   deploy:
     name: Deploy to Vercel
