@@ -2,7 +2,6 @@
 
 import { DashBoardSidebar } from "@/components/global/dashboard-sidebar";
 import { SidebarProvider } from "@/components/ui/sidebar";
-import { EventSidebar } from "@/components/global/event-sidebar";
 import { DashboardTitleType, NavItems, Term, User, UserRole } from "../../../types";
 import { useAuth } from "@/api/hooks/use-auth.hook";
 import { useContext, useEffect } from "react";
@@ -134,7 +133,6 @@ export default function DashboardLayout({
           <DashboardHeader dashboardTitle={dashboardTitle} userData={userData as User} />
           <section className="flex pt-14">
             <section className="w-full p-4 sm:p-4">{children}</section>
-            <EventSidebar />
           </section>
         </main>
       </SidebarProvider>
