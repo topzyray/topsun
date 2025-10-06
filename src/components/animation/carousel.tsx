@@ -6,15 +6,7 @@ import "swiper/css";
 import "swiper/css/effect-fade";
 
 export function HeroCarousel() {
-  const backgroundImages = [
-    "/images/1.png",
-    "/images/2.png",
-    "/images/3.png",
-    "/images/4.png",
-    "/images/5.png",
-    "/images/6.png",
-    "/images/7.png",
-  ];
+  const backgroundImages = ["/images/1.jpeg", "/images/2.jpeg", "/images/3.jpeg", "/images/4.jpeg"];
   return (
     <div className="absolute inset-0 z-0">
       <Swiper

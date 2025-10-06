@@ -57,10 +57,10 @@ export default function Navbar() {
       transition={{ duration: 0.6 }}
       // className="shadow-soft sticky top-0 z-50 border-b backdrop-blur-sm transition-colors"
       className={`fixed top-0 right-0 left-0 z-50 transition-all duration-300 ${
-        isScrolled ? "bg-background/95 shadow-lg backdrop-blur-md" : "bg-transparent"
+        isScrolled ? "bg-transparent" : "bg-transparent"
       }`}
     >
-      <div className="mx-auto max-w-7xl px-4 py-2 sm:px-6 lg:px-8">
+      <div className="mx-auto max-w-7xl rounded-4xl px-4 py-2 shadow-lg backdrop-blur-md sm:px-6 lg:px-8">
         <div className="flex items-center justify-between">
           {/* Logo */}
           <motion.div

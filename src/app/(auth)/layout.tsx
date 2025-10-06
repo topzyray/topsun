@@ -14,7 +14,7 @@ export default function AuthLayout({ children }: { children: React.ReactNode }) 
           <ThemeToggle />
         </div>
         <section className="px-3 sm:px-0">
-          <Card className="mx-auto mt-24 flex max-w-sm justify-center rounded-lg">
+          <Card className="mx-auto mt-24 flex max-w-sm justify-center rounded-lg md:mt-44">
             <CardHeader className="flex items-center justify-center">
               <SiteLogo />
             </CardHeader>

@@ -58,8 +58,8 @@ export default function Admissions() {
             <div className="bg-hero-gradient text-primary-foreground rounded-lg p-8">
               <h3 className="mb-4 text-2xl font-bold">Digital Prospectus</h3>
               <p className="mb-6 opacity-90">
-                Download our comprehensive guide to life at Topsun College, including curriculum
-                details, facilities information, and student life.
+                Download our comprehensive guide to life at Topsun International School, including
+                curriculum details, facilities information, and student life.
               </p>
               <Button
                 variant="outline"

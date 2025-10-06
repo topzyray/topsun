@@ -71,8 +71,8 @@ export default function About() {
             Building Tomorrow&apos;s Leaders
           </h2>
           <p className="text-muted-foreground mx-auto max-w-3xl text-xl">
-            For over 5 years, Topsun College has been at the forefront of educational excellence,
-            preparing students not just for exams, but for life.
+            For over 5 years, Topsun International School has been at the forefront of educational
+            excellence, preparing students not just for exams, but for life.
           </p>
         </motion.div>
 

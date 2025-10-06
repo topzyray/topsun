@@ -60,9 +60,9 @@ export default function Hero() {
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.6, delay: 0.8 }}
         >
-          Welcome from our Proprietor: &quot;At Topsun College, we believe every child has the
-          potential to achieve greatness. Our nurturing environment, exceptional teaching, and
-          innovative programs prepare students for success in an ever-changing world.&quot;
+          Welcome from our Proprietor: &quot;At Topsun International School, we believe every child
+          has the potential to achieve greatness. Our nurturing environment, exceptional teaching,
+          and innovative programs prepare students for success in an ever-changing world.&quot;
         </motion.p>
         <motion.div
           className="flex flex-col justify-center gap-4 sm:flex-row"
@@ -71,13 +71,13 @@ export default function Hero() {
           transition={{ duration: 0.6, delay: 1.0 }}
         >
           <motion.div whileHover={{ scale: 1.05, y: -2 }} whileTap={{ scale: 0.95 }}>
-            <Button variant="success" size="lg" className="px-8 py-4 text-lg">
+            <Button variant="success" size="xl" className="textxl px-8 py-4">
               <Calendar className="mr-2 h-5 w-5" />
               Book a Tour
             </Button>
           </motion.div>
           <motion.div whileHover={{ scale: 1.05, y: -2 }} whileTap={{ scale: 0.95 }}>
-            <Button size="lg" variant="secondary" className="px-8 py-4 text-lg">
+            <Button size="xl" variant="secondary" className="px-8 py-4 text-lg">
               Apply Now
             </Button>
           </motion.div>
