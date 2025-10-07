@@ -17,7 +17,7 @@ export default function Hero() {
       <HeroCarousel />
 
       <motion.div
-        className="text-primary-foreground relative z-10 mx-auto max-w-4xl px-4 text-center"
+        className="text-primary-foreground relative z-10 mx-auto max-w-4xl rounded-2xl p-6 px-4 text-center backdrop-blur-xs"
         initial={{ opacity: 0, y: 80 }}
         animate={{ opacity: 1, y: 0 }}
         transition={{ duration: 0.8, delay: 0.2 }}

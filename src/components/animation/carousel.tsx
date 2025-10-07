@@ -28,7 +28,7 @@ export function HeroCarousel() {
                 style={{ backgroundImage: `url(${img})` }}
               />
               {/* Overlay gradient */}
-              <div className="bg-primary/50 dark:bg-secondary/50 absolute inset-0"></div>
+              <div className="bg-secondary/50 dark:bg-secondary/50 absolute inset-0"></div>
               {/* <div className="from-primary/90 via-primary/80 to-primary/70 absolute inset-0 bg-gradient-to-br opacity-80" /> */}
             </div>
           </SwiperSlide>
