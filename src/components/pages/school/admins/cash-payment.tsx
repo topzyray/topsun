@@ -1,7 +1,7 @@
 "use client";
 
+import PaymentFormCash from "@/components/forms/payment/payment-form-cash";
 import { Separator } from "../../../ui/separator";
-import PaymentFormCash from "@/components/forms/school/admins/payment-form-cash";
 import BackButton from "@/components/buttons/BackButton";
 
 export default function CashPaymentComponent() {

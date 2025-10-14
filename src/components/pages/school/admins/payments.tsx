@@ -13,9 +13,12 @@ import { useCustomQuery } from "@/api/hooks/queries/use-query.hook";
 import BackButton from "@/components/buttons/BackButton";
 import SubmitButton from "@/components/buttons/SubmitButton";
 import TooltipComponent from "@/components/info/tool-tip";
+import { Button } from "@/components/ui/button";
+import { useRouter } from "next/navigation";
 
 export default function PaymentComponent() {
   const queryClient = useQueryClient();
+  const router = useRouter();
 
   const { userDetails } = useAuth();
   const { activeSessionData } = useContext(GlobalContext);
@@ -82,19 +85,17 @@ export default function PaymentComponent() {
                 message={"The above button creates payments for all students in the school."}
               />
 
-              {/* {userDetails && userDetails.role === "super_admin" && (
+              {userDetails && userDetails.role === "super_admin" && (
                 <Button onClick={() => router.push("payments/cash_payment")}>
                   Process Cash Payments
                 </Button>
-              )} */}
+              )}
 
-              {/* {userDetails && userDetails.role && (
-                <Button
-                  onClick={() => router.push("payments/pending_approval")}
-                >
+              {userDetails && userDetails.role && (
+                <Button onClick={() => router.push("payments/pending_approval")}>
                   Approve bank payments
                 </Button>
-              )} */}
+              )}
             </div>
           )}
 

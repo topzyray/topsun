@@ -21,14 +21,16 @@ import * as Icons from "lucide-react";
 import { Collapsible, CollapsibleTrigger, CollapsibleContent } from "../ui/collapsible";
 import { Separator } from "../ui/separator";
 import SiteLogo from "../atoms/site-logo";
-import { useContext } from "react";
+import { useContext, useEffect, useState } from "react";
 import { GlobalContext } from "@/providers/global-state-provider";
+import { cn } from "@/lib/utils";
 
 interface DashBoardSidebarInterface {
   navItems: NavItems;
 }
 
 export function DashBoardSidebar({ navItems }: DashBoardSidebarInterface) {
+  const [openMenu, setOpenMenu] = useState<string | null>(null);
   const { isMobile, toggleSidebar } = useSidebar();
   const { activeSessionData } = useContext(GlobalContext);
   const pathname = usePathname();
@@ -37,6 +39,19 @@ export function DashBoardSidebar({ navItems }: DashBoardSidebarInterface) {
   const toggleSideBarOnMobile = () => {
     if (isMobile) toggleSidebar();
   };
+
+  useEffect(() => {
+    const activeMenu = navItems.find(
+      (item) =>
+        item.hasSubmenu &&
+        item.submenu?.some((subItem) =>
+          normalize(pathname).startsWith(normalize(subItem.url ?? "")),
+        ),
+    );
+    if (activeMenu) {
+      setOpenMenu(activeMenu.title);
+    }
+  }, [pathname, navItems]);
 
   return (
     <Sidebar side="left" variant="floating" collapsible="offcanvas">
@@ -57,12 +72,27 @@ export function DashBoardSidebar({ navItems }: DashBoardSidebarInterface) {
           const Icon =
             (Icons[item.icon as keyof typeof Icons] as React.FC<React.SVGProps<SVGSVGElement>>) ||
             DefaultIcon;
+
+          const submenuIsCurrentlyActive =
+            !!item.hasSubmenu &&
+            item.submenu?.some((subItem) =>
+              normalize(pathname).startsWith(normalize(subItem.url ?? "")),
+            );
+
           return item.hasSubmenu ? (
-            <Collapsible key={item.title} className="group/collapsible">
+            <Collapsible
+              key={item.title}
+              className="group/collapsible"
+              open={openMenu === item.title}
+              onOpenChange={(isOpen) => setOpenMenu(isOpen ? item.title : null)}
+            >
               <SidebarGroup className="px-0 py-0">
                 <SidebarGroupLabel
                   asChild
-                  className="text-text hover:bg-sidebar-accent hover:text-sidebar-accent-foreground pl-2 text-sm"
+                  className={cn(
+                    "text-text hover:bg-sidebar-accent hover:text-sidebar-accent-foreground pl-2 text-sm",
+                    submenuIsCurrentlyActive && "bg-sidebar-accent text-sidebar-accent-foreground",
+                  )}
                 >
                   <CollapsibleTrigger className="py-5 hover:cursor-pointer">
                     <span className="flex items-center gap-x-2">

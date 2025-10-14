@@ -148,7 +148,8 @@ export const columns: ColumnDef<PaymentPendingApproval>[] = [
     },
   },
   {
-    accessorKey: "date_paid",
+    id: "date_paid",
+    accessorFn: (row) => row.date_paid,
     header: ({ column }) => {
       return <p className="flex max-w-max cursor-pointer items-center gap-2 text-nowrap">Date</p>;
     },
@@ -159,14 +160,15 @@ export const columns: ColumnDef<PaymentPendingApproval>[] = [
     },
   },
   {
-    accessorKey: "date_paid",
+    id: "time_paid",
+    accessorFn: (row) => row.date_paid,
     header: ({ column }) => {
       return <p className="flex max-w-max cursor-pointer items-center gap-2 text-nowrap">Time</p>;
     },
     cell: ({ row }) => {
       return (
         <div className="text-nowrap capitalize">
-          {TextHelper.getFormattedTime(row.getValue("date_paid"))}
+          {TextHelper.getFormattedTime(row.getValue("time_paid"))}
         </div>
       );
     },
