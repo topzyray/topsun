@@ -403,7 +403,7 @@ export default function ScoreInputForm({ params }: { params: Record<string, any>
                             <SelectContent className="capitalize">
                               {/* DETERMINE WHETHER TO RECORD OBJ, THEORY OR NONE */}
                               {resultSettingsComponents?.flattenedComponents
-                                .filter((component) => component)
+                                .filter((component) => component?.key !== "obj")
                                 .map((setting) => (
                                   <SelectItem
                                     key={setting.name}

@@ -25,6 +25,7 @@ interface DashboardLayout {
 export default function DashboardLayout({
   navItems,
   role,
+  defaultOpen,
   dashboardTitle,
   children,
 }: Readonly<DashboardLayout>) {
@@ -127,10 +128,12 @@ export default function DashboardLayout({
 
   return (
     <RouteGuard protected roles={[role]}>
-      <SidebarProvider defaultOpen>
+      <SidebarProvider defaultOpen={defaultOpen}>
         <DashBoardSidebar navItems={navItems} />
         <main className="relative max-h-screen w-full">
-          <DashboardHeader dashboardTitle={dashboardTitle} userData={userData as User} />
+          <section>
+            <DashboardHeader dashboardTitle={dashboardTitle} userData={userData as User} />
+          </section>
           <section className="flex pt-14">
             <section className="w-full p-4 sm:p-4">{children}</section>
           </section>
