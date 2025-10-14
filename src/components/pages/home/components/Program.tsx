@@ -51,25 +51,40 @@ export default function Program() {
         >
           {[
             {
-              image: "/images/classroom.jpg",
+              image: "/images/6.jpeg",
               title: "Academic Excellence",
               desc: "Our rigorous academic program challenges students while providing the support they need to succeed.",
             },
             {
-              image: "/images/sports.jpg",
+              image: "/images/9.jpeg",
               title: "Sports & Wellness",
               desc: "Comprehensive sports programs that build character, teamwork, and physical fitness.",
             },
             {
-              image: "/images/library.jpg",
+              image: "/images/11.jpeg",
               title: "Arts & Culture",
               desc: "Creative programs that nurture artistic expression and cultural understanding.",
             },
+            {
+              image: "/images/12.jpeg",
+              title: "Caring, Capable and Qualifed Staff",
+              desc: "Ever devouted, caring, loving and qualified staffs",
+            },
+            {
+              image: "/images/8.jpeg",
+              title: "Indoors Games",
+              desc: "Availability on indoor games to activate the intellectual capacity of our students.",
+            },
+            {
+              image: "/images/10.jpeg",
+              title: "Quiz and Debate Competitions",
+              desc: "Quizzes and debate competitions that strengthens our student academic growth.",
+            },
           ].map((item, index) => (
             <motion.div key={index} variants={cardVariants}>
-              <Card className="shadow-medium hover:shadow-large group overflow-hidden transition-all duration-300">
+              <Card className="shadow-medium hover:shadow-large group overflow-hidden pt-0 transition-all duration-300">
                 <motion.div
-                  className="relative h-48 overflow-hidden bg-cover bg-center"
+                  className="relative h-64 overflow-hidden bg-cover bg-center"
                   style={{ backgroundImage: `url(${item.image})` }}
                   whileHover={{ scale: 1.05 }}
                   transition={{ duration: 0.4 }}
@@ -80,15 +95,13 @@ export default function Program() {
                     transition={{ duration: 0.3 }}
                   />
                 </motion.div>
-                <CardHeader>
+                <CardHeader className="mt-4">
                   <CardTitle>{item.title}</CardTitle>
                   <CardDescription>{item.desc}</CardDescription>
                 </CardHeader>
                 <CardContent>
                   <motion.div whileHover={{ scale: 1.02 }} whileTap={{ scale: 0.98 }}>
-                    <Button variant="school" className="w-full">
-                      Learn More
-                    </Button>
+                    <Button className="bg-accent w-full sm:py-6">Learn More</Button>
                   </motion.div>
                 </CardContent>
               </Card>

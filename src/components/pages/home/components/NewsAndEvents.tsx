@@ -118,7 +118,7 @@ export default function NewsAndEvents() {
               ))}
             </div>
 
-            <div className="bg-accent-gradient text-accent-foreground mt-8 rounded-lg p-6">
+            <div className="bg-accent-gradient text-accent mt-8 rounded-lg p-6">
               <h3 className="mb-2 text-xl font-bold">Newsletter Signup</h3>
               <p className="mb-4 opacity-90">Stay updated with the latest school news and events</p>
               <div className="flex gap-2">
@@ -126,12 +126,7 @@ export default function NewsAndEvents() {
                   placeholder="Enter your email"
                   className="bg-accent-foreground/10 border-accent-foreground/20 text-accent-foreground placeholder-accent-foreground/70"
                 />
-                <Button
-                  variant="outline"
-                  className="border-accent-foreground text-accent-foreground hover:bg-accent-foreground hover:text-accent"
-                >
-                  Subscribe
-                </Button>
+                <Button variant="outline">Subscribe</Button>
               </div>
             </div>
           </div>

@@ -57,6 +57,10 @@ export default function About() {
     },
   ];
 
+  const yearFounded = 2016;
+  const currentYear = new Date().getFullYear();
+  const yearsOfOperations = currentYear - yearFounded;
+
   return (
     <section id="about" className="bg-muted/30 py-20" ref={aboutRef}>
       <div className="container mx-auto px-4">
@@ -71,8 +75,9 @@ export default function About() {
             Building Tomorrow&apos;s Leaders
           </h2>
           <p className="text-muted-foreground mx-auto max-w-3xl text-xl">
-            For over 5 years, Topsun International School has been at the forefront of educational
-            excellence, preparing students not just for exams, but for life.
+            Founded in September 2016. For over {yearsOfOperations} years, Topsun International
+            School has been at the forefront of educational excellence, preparing students not just
+            for exams, but for life.
           </p>
         </motion.div>
 

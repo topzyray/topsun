@@ -140,7 +140,7 @@ export default function Navbar() {
               whileHover={{ scale: 1.05 }}
               whileTap={{ scale: 0.95 }}
             >
-              <Button onClick={() => router.push(portalLoginUrl)} variant="success" size="sm">
+              <Button onClick={() => router.push(portalLoginUrl)} size="sm">
                 Portal Login
               </Button>
             </motion.div>
@@ -227,11 +227,7 @@ export default function Navbar() {
                 animate={{ opacity: 1 }}
                 transition={{ delay: 0.2 }}
               >
-                <Button
-                  onClick={() => router.push(portalLoginUrl)}
-                  variant="success"
-                  className="w-full"
-                >
+                <Button onClick={() => router.push(portalLoginUrl)} className="w-full">
                   Portal Login
                 </Button>
               </motion.div>

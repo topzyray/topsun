@@ -5,6 +5,7 @@ import { MapPin, Phone, Mail, Globe, GraduationCap } from "lucide-react";
 import { Separator } from "@/components/ui/separator";
 import { envConfig } from "@/configs/env.config";
 import Link from "next/link";
+import SiteLogo from "@/components/atoms/site-logo";
 
 export default function ContactAndFooter() {
   // Animation variants
@@ -37,8 +38,12 @@ export default function ContactAndFooter() {
         <div className="mb-12 grid gap-8 md:grid-cols-2 lg:grid-cols-4">
           <div>
             <div className="mb-6 flex items-center space-x-3">
-              <div className="bg-accent flex h-10 w-10 items-center justify-center rounded-lg">
-                <GraduationCap className="text-accent-foreground h-6 w-6" />
+              <div
+                className="flex items-center justify-center rounded-lg"
+                // whileHover={{ rotate: 15 }}
+                // transition={{ type: "spring", stiffness: 300 }}
+              >
+                <SiteLogo className="h-10 w-10" />
               </div>
               <div>
                 <h3 className="text-foreground text-xl font-bold">

@@ -55,7 +55,7 @@ export default function Admissions() {
 
         <div className="grid items-center gap-12 lg:grid-cols-2">
           <div className="space-y-8">
-            <div className="bg-hero-gradient text-primary-foreground rounded-lg p-8">
+            <div className="bg-hero-gradient text-primary rounded-lg p-8">
               <h3 className="mb-4 text-2xl font-bold">Digital Prospectus</h3>
               <p className="mb-6 opacity-90">
                 Download our comprehensive guide to life at Topsun International School, including
@@ -63,7 +63,7 @@ export default function Admissions() {
               </p>
               <Button
                 variant="outline"
-                className="border-primary-foreground text-primary-foreground hover:bg-primary-foreground hover:text-primary"
+                // className="border-primary-foreground text-primary-foreground hover:bg-primary-foreground hover:text-primary"
               >
                 Download Prospectus
               </Button>

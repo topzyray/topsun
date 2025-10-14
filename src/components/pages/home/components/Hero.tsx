@@ -7,6 +7,7 @@ import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { HeroCarousel } from "@/components/animation/carousel";
 import { TypeAnimation } from "react-type-animation";
+import Link from "next/link";
 
 export default function Hero() {
   return (
@@ -70,17 +71,21 @@ export default function Hero() {
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.6, delay: 1.0 }}
         >
-          <motion.div whileHover={{ scale: 1.05, y: -2 }} whileTap={{ scale: 0.95 }}>
-            <Button variant="success" size="xl" className="textxl px-8 py-4">
-              <Calendar className="mr-2 h-5 w-5" />
-              Book a Tour
-            </Button>
-          </motion.div>
-          <motion.div whileHover={{ scale: 1.05, y: -2 }} whileTap={{ scale: 0.95 }}>
-            <Button size="xl" variant="secondary" className="px-8 py-4 text-lg">
-              Apply Now
-            </Button>
-          </motion.div>
+          <Link href="https://wa.me/2348067990151" target="_blank">
+            <motion.div whileHover={{ scale: 1.05, y: -2 }} whileTap={{ scale: 0.95 }}>
+              <Button size="xl" className="px-8 py-4 text-lg">
+                <Calendar className="mr-2 h-5 w-5" />
+                Book a Tour
+              </Button>
+            </motion.div>
+          </Link>
+          <Link href="mailto:temitopeb588@gmail.com" target="_blank">
+            <motion.div whileHover={{ scale: 1.05, y: -2 }} whileTap={{ scale: 0.95 }}>
+              <Button size="xl" variant="secondary" className="bg-accent px-8 py-4 text-lg">
+                Apply Now
+              </Button>
+            </motion.div>
+          </Link>
         </motion.div>
       </motion.div>
     </section>
