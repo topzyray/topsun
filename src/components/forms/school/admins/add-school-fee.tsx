@@ -220,7 +220,7 @@ export default function AddSchoolFeeForm({ onClose, closeOnSuccess }: AddSchoolF
                     formLabel="Account Name"
                     formInputType="text"
                     disabled={isCreatingSchoolFee}
-                    editable={true}
+                    readOnly={true}
                   />
 
                   <InputComponent
@@ -229,7 +229,7 @@ export default function AddSchoolFeeForm({ onClose, closeOnSuccess }: AddSchoolF
                     formLabel="Bank Name"
                     formInputType="text"
                     disabled={isCreatingSchoolFee}
-                    editable={true}
+                    readOnly={true}
                   />
                 </div>
               ) : (

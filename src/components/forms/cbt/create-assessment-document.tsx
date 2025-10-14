@@ -26,6 +26,7 @@ import {
   TableRow,
 } from "@/components/ui/table";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
+import { TextHelper } from "@/helpers/TextHelper";
 
 type Item = {
   id: string;
@@ -81,10 +82,6 @@ export default function BulkCreateExamDocumentForm() {
   const class_level_watch = itemForm.watch("level");
   const assessment_type_watch = itemForm.watch("assessment_type");
 
-  useEffect(() => {
-    itemForm.setValue("assessment_type", "");
-  }, [class_level_watch, itemForm]);
-
   const {
     data: resultSettings,
     isLoading: isLoadingResultSetting,
@@ -95,6 +92,16 @@ export default function BulkCreateExamDocumentForm() {
   );
 
   const resultSettingsComponents = resultSettings?.result_setting;
+
+  const cbtObj =
+    resultSettingsComponents?.flattenedComponents?.length &&
+    resultSettingsComponents?.flattenedComponents?.find((item: any) => item.key === "obj");
+
+  useEffect(() => {
+    if (cbtObj) {
+      itemForm.setValue("assessment_type", TextHelper.allToUpperCase(cbtObj?.name));
+    }
+  }, [cbtObj, class_level_watch, itemForm]);
 
   const { mutate: createExamTermDoc, isPending: isCreatingExamTermDoc } = useCustomMutation(
     CbtApiService.createTermExamDocumentInASchool,
@@ -187,29 +194,29 @@ export default function BulkCreateExamDocumentForm() {
                   {isLoadingResultSetting ? (
                     <CircularLoader text="Loading result settings" />
                   ) : resultSettingsComponents?.flattenedComponents?.length ? (
-                    <ComboboxComponent
-                      formName="assessment_type"
-                      formControl={itemForm.control}
-                      formLabel="Assessment Type"
-                      formOptionLabel="Select assessment type"
-                      formPlaceholder=""
-                      formOptionData={resultSettingsComponents.flattenedComponents}
-                      disabled={isCreatingExamTermDoc}
-                      displayValue={(data: any) => data.name}
-                      valueField="name"
-                    />
-                  ) : isResultSettingError ? (
-                    <ErrorBox error={resultSetttingError} />
-                  ) : (
+                    // <ComboboxComponent
+                    //   formName="assessment_type"
+                    //   formControl={itemForm.control}
+                    //   formLabel="Assessment Type"
+                    //   formOptionLabel="Select assessment type"
+                    //   formPlaceholder=""
+                    //   formOptionData={resultSettingsComponents.flattenedComponents}
+                    //   disabled={isCreatingExamTermDoc}
+                    //   displayValue={(data: any) => data.name}
+                    //   valueField="name"
+                    // />
                     <InputComponent
                       formName="assessment_type"
                       formControl={itemForm.control}
                       formLabel="Assessment Type"
                       formInputType="text"
-                      formPlaceholder="e.g. First term exam"
+                      formPlaceholder=""
                       disabled={isCreatingExamTermDoc}
+                      readOnly
                     />
-                  )}
+                  ) : isResultSettingError ? (
+                    <ErrorBox error={resultSetttingError} />
+                  ) : null}
                 </>
               )}
 

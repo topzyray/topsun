@@ -3,8 +3,8 @@
 import { useRouter } from "next/navigation";
 import { Separator } from "../../ui/separator";
 import { useState } from "react";
-import PaymentFormBank from "../../forms/school/payment-form-bank";
-import PaymentFormCard from "../../forms/school/payment-form-card";
+import PaymentFormBank from "../../forms/payment/payment-form-bank";
+import PaymentFormCard from "../../forms/payment/payment-form-card";
 import { useAuth } from "@/api/hooks/use-auth.hook";
 import BackButton from "../../buttons/BackButton";
 

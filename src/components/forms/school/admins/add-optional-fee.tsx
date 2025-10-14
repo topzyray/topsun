@@ -200,7 +200,7 @@ export default function AddOptionalFeeForm({
                     formLabel="Account Name"
                     formInputType="text"
                     disabled={isCreatingOptionalFee}
-                    editable={true}
+                    readOnly={true}
                   />
 
                   <InputComponent
@@ -209,7 +209,7 @@ export default function AddOptionalFeeForm({
                     formLabel="Bank Name"
                     formInputType="text"
                     disabled={isCreatingOptionalFee}
-                    editable={true}
+                    readOnly={true}
                   />
                 </>
               ) : (

@@ -163,7 +163,7 @@ export default function AuthorizeStudentToStartExamForm({
                 formPlaceholder=""
                 disabled={isAuthorizingStudentsToStartExam}
                 formInputType="text"
-                editable
+                readOnly
               />
               <InputComponent
                 formName={`start_time`}
@@ -172,7 +172,7 @@ export default function AuthorizeStudentToStartExamForm({
                 formPlaceholder=""
                 disabled={isAuthorizingStudentsToStartExam}
                 formInputType="text"
-                editable
+                readOnly
               />
             </>
           ) : isClassSubjectError ? (

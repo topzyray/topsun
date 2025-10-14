@@ -4,14 +4,14 @@ import { PaymentApiService } from "@/api/services/PaymentApiService";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm } from "react-hook-form";
 import { z } from "zod";
-import { Form, FormDescription, FormLabel } from "../../../ui/form";
-import InputComponent from "../../base/input-component";
-import { Student } from "../../../../../types";
+import { Form, FormDescription, FormLabel } from "../../ui/form";
+import InputComponent from "../base/input-component";
+import { Student } from "../../../../types";
 import { useContext, useEffect, useState } from "react";
 import { GlobalContext } from "@/providers/global-state-provider";
-import { CircularLoader } from "../../../loaders/page-level-loader";
+import { CircularLoader } from "../../loaders/page-level-loader";
 import { StudentApiService } from "@/api/services/StudentApiService";
-import { ComboboxComponent } from "../../base/combo-box-component";
+import { ComboboxComponent } from "../base/combo-box-component";
 import { useCustomQuery } from "@/api/hooks/queries/use-query.hook";
 import { useCustomMutation } from "@/api/hooks/queries/use-mutation.hook";
 import { useQueryClient } from "@tanstack/react-query";
@@ -178,7 +178,7 @@ export default function PaymentFormCash() {
               formPlaceholder=""
               formInputType="text"
               disabled={isMakingCashPayment}
-              editable={true}
+              readOnly={true}
             />
 
             <InputComponent
@@ -188,7 +188,7 @@ export default function PaymentFormCash() {
               formPlaceholder=""
               formInputType="text"
               disabled={isMakingCashPayment}
-              editable={true}
+              readOnly={true}
             />
 
             <div className="rounded border px-2.5 py-1.5">

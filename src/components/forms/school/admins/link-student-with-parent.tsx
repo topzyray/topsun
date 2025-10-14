@@ -238,7 +238,7 @@ export default function LinkStudentWithParent({
                       formPlaceholder=""
                       formInputType="text"
                       disabled={isLinking}
-                      editable={true}
+                      readOnly={true}
                     />
 
                     <InputComponent
@@ -248,7 +248,7 @@ export default function LinkStudentWithParent({
                       formPlaceholder=""
                       formInputType="text"
                       disabled={isLinking}
-                      editable={true}
+                      readOnly={true}
                     />
                   </>
                 )}

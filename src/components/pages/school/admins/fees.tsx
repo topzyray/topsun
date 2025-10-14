@@ -7,13 +7,12 @@ import { SchoolFeeTable } from "../../../tables/school/admins/school-fees-table"
 import { MandatoryFeeTable } from "@/components/tables/school/admins/mandatory-fees-table";
 import { OptionalFeeTable } from "@/components/tables/school/admins/optional-fees-table";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
-import { Button } from "@/components/ui/button";
-import AddPaymentPriorityForSchoolForm from "@/components/forms/school/admins/add-payment-priority-for-school-form";
+// import AddPaymentPriorityForSchoolForm from "@/components/forms/school/admins/add-payment-priority-for-school-form";
 import { useAuth } from "@/api/hooks/use-auth.hook";
-import { RoleTypeEnum } from "@/api/enums/RoleTypeEnum";
+// import { RoleTypeEnum } from "@/api/enums/RoleTypeEnum";
 
 export default function FeesComponent() {
-  const [openPriorityForm, setOpenPriorityForm] = React.useState(false);
+  // const [openPriorityForm, setOpenPriorityForm] = React.useState(false);
   // const [renderFee, setRenderFee] = React.useState({
   //   schoolFee: true,
   //   mandatoryFee: false,
@@ -30,15 +29,14 @@ export default function FeesComponent() {
         <BackButton />
       </div>
 
-      {userDetails?.role === RoleTypeEnum.SUPER_ADMIN && (
+      {/* {userDetails?.role === RoleTypeEnum.SUPER_ADMIN && (
         <>
-          {" "}
           <Separator />
           <div>
             <Button onClick={() => setOpenPriorityForm(true)}>Create Fee Priority</Button>
           </div>
         </>
-      )}
+      )} */}
 
       <Separator />
 
@@ -85,7 +83,7 @@ export default function FeesComponent() {
       </div>
 
       {/* Add payment priority */}
-      <AddPaymentPriorityForSchoolForm
+      {/* <AddPaymentPriorityForSchoolForm
         open={openPriorityForm}
         onClose={() => {
           setOpenPriorityForm(false);
@@ -93,7 +91,7 @@ export default function FeesComponent() {
         closeOnSuccess={() => {
           setOpenPriorityForm(false);
         }}
-      />
+      /> */}
     </div>
   );
 }

@@ -166,7 +166,7 @@ export default function AddMandatoryFeeForm({
                     formLabel="Account Name"
                     formInputType="text"
                     disabled={isCreatingMandatoryFee}
-                    editable={true}
+                    readOnly={true}
                   />
 
                   <InputComponent
@@ -175,7 +175,7 @@ export default function AddMandatoryFeeForm({
                     formLabel="Bank Name"
                     formInputType="text"
                     disabled={isCreatingMandatoryFee}
-                    editable={true}
+                    readOnly={true}
                   />
                 </>
               ) : (

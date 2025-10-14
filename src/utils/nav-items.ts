@@ -46,7 +46,7 @@ export const super_admin_nav: NavItems = [
   {
     title: "Assessments Management",
     url: "/dashboard/super_admin/cbt",
-    icon: "Pen",
+    icon: "Book",
     hasSubmenu: false,
   },
   {
@@ -101,7 +101,7 @@ export const school_admin_nav: NavItems = [
   {
     title: "Assessments Management",
     url: "/dashboard/admin/cbt",
-    icon: "Pen",
+    icon: "Book",
     hasSubmenu: false,
   },
   {
@@ -141,7 +141,7 @@ export const teaching_staff: NavItems = [
   {
     title: "Assessments Management",
     url: "/dashboard/teacher/cbt",
-    icon: "Pen",
+    icon: "Book",
     hasSubmenu: false,
   },
   {

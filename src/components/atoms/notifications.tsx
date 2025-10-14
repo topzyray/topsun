@@ -18,7 +18,7 @@ export function Notifications() {
             <span className="bg-meta-1 absolute -top-0.5 right-0 z-10 h-1.5 w-1.5 rounded-full bg-red-600">
               <span className="bg-meta-1 absolute -top-0.5 -right-0.5 -z-10 inline-flex h-2.5 w-2.5 animate-ping rounded-full bg-red-700 opacity-75"></span>
             </span>
-            <BellIcon className="scale-0 rotate-90 transition-all dark:scale-100 dark:rotate-0" />
+            <BellIcon className="scale-100 rotate-0 transition-all" />
           </section>
         </Button>
       </DropdownMenuTrigger>

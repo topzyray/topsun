@@ -175,7 +175,7 @@ export default function ChangeClassTeacher({
                   formInputType="text"
                   formPlaceholder=""
                   disabled={isAssignTeacherToClass}
-                  editable={true}
+                  readOnly={true}
                 />
 
                 <InputComponent
@@ -185,7 +185,7 @@ export default function ChangeClassTeacher({
                   formInputType="text"
                   formPlaceholder=""
                   disabled={isAssignTeacherToClass}
-                  editable={true}
+                  readOnly={true}
                 />
               </>
             )}

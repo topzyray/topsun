@@ -14,7 +14,7 @@ export default function InputComponent({
   isPassword,
   formMaxYear,
   formMinYear,
-  editable,
+  readOnly,
   disabled,
   inputClassName,
 }: InputComponentProps) {
@@ -59,7 +59,7 @@ export default function InputComponent({
                 placeholder={formPlaceholder}
                 max={formMaxYear}
                 min={formMinYear}
-                readOnly={editable}
+                readOnly={readOnly}
                 {...field}
                 onChange={handleChange}
                 value={

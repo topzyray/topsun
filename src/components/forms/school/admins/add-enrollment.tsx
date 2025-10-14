@@ -254,7 +254,7 @@ export default function AddNewEnrollment({
                   formPlaceholder=""
                   disabled={isEnrolling}
                   formInputType="text"
-                  editable={true}
+                  readOnly={true}
                 />
 
                 {class_id !== undefined && (

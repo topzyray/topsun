@@ -138,7 +138,7 @@ export default function StudentRegistrationForm() {
                   formPlaceholder=""
                   formInputType="text"
                   disabled={isRegisteringStudent}
-                  editable={true}
+                  readOnly={true}
                 />
 
                 <InputComponent

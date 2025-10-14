@@ -150,7 +150,7 @@ export default function AddNewClass({
                   formLabel="Class Name"
                   formInputType="text"
                   disabled={isCreatingClass}
-                  editable={true}
+                  readOnly={true}
                 />
 
                 <InputComponent

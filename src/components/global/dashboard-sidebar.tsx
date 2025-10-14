@@ -32,21 +32,22 @@ export function DashBoardSidebar({ navItems }: DashBoardSidebarInterface) {
   const { isMobile, toggleSidebar } = useSidebar();
   const { activeSessionData } = useContext(GlobalContext);
   const pathname = usePathname();
+  const normalize = (url: string) => url.replace(/\/+$/, "");
 
   const toggleSideBarOnMobile = () => {
     if (isMobile) toggleSidebar();
   };
 
   return (
-    <Sidebar side="left" variant="sidebar" collapsible="offcanvas">
+    <Sidebar side="left" variant="floating" collapsible="offcanvas">
       <SidebarHeader>
         <SidebarMenu>
           <SidebarMenuItem className="flex items-center gap-4">
-            <SiteLogo className="h-[2.25rem] w-[2.25rem]" />
+            <SiteLogo className="h-[2.5rem] w-[2.25rem]" />
           </SidebarMenuItem>
         </SidebarMenu>
       </SidebarHeader>
-      <SidebarSeparator />
+      <SidebarSeparator className="max-w-[14rem]" />
       <SidebarContent>
         <SidebarGroupLabel>Navigations</SidebarGroupLabel>
 
@@ -58,9 +59,12 @@ export function DashBoardSidebar({ navItems }: DashBoardSidebarInterface) {
             DefaultIcon;
           return item.hasSubmenu ? (
             <Collapsible key={item.title} className="group/collapsible">
-              <SidebarGroup className="">
-                <SidebarGroupLabel asChild className="text-text pl-0 text-sm">
-                  <CollapsibleTrigger className="py-4 hover:cursor-pointer">
+              <SidebarGroup className="px-0 py-0">
+                <SidebarGroupLabel
+                  asChild
+                  className="text-text hover:bg-sidebar-accent hover:text-sidebar-accent-foreground pl-2 text-sm"
+                >
+                  <CollapsibleTrigger className="py-5 hover:cursor-pointer">
                     <span className="flex items-center gap-x-2">
                       {Icon && <Icon className="w-4" />}
                       {item.title}
@@ -69,19 +73,20 @@ export function DashBoardSidebar({ navItems }: DashBoardSidebarInterface) {
                   </CollapsibleTrigger>
                 </SidebarGroupLabel>
 
-                <CollapsibleContent className="mt-2">
+                <CollapsibleContent className="mt-2 pl-2">
                   <SidebarGroupContent>
                     <SidebarMenu>
                       {item.submenu != undefined &&
                         item.submenu.map((submenuItem) => {
-                          const DefaultIcon = Icons.HelpCircle as React.FC<
+                          const DefaultIcon = Icons.ArrowRight as React.FC<
                             React.SVGProps<SVGSVGElement>
                           >;
 
                           const Icon =
+                            DefaultIcon ||
                             (Icons[item.icon as keyof typeof Icons] as React.FC<
                               React.SVGProps<SVGSVGElement>
-                            >) || DefaultIcon;
+                            >);
 
                           return (
                             <SidebarMenuItem
@@ -90,11 +95,13 @@ export function DashBoardSidebar({ navItems }: DashBoardSidebarInterface) {
                             >
                               <SidebarMenuButton
                                 asChild
-                                isActive={submenuItem.url.startsWith(pathname)}
-                                size="lg"
+                                isActive={normalize(pathname).startsWith(
+                                  normalize(submenuItem.url ?? ""),
+                                )}
+                                size="default"
                               >
                                 <Link href={submenuItem.url}>
-                                  {/* {Icon && <Icon className="w-4" />} */}
+                                  {Icon && <Icon className="w-4" />}
                                   <span>{submenuItem.title}</span>
                                 </Link>
                               </SidebarMenuButton>
@@ -111,7 +118,11 @@ export function DashBoardSidebar({ navItems }: DashBoardSidebarInterface) {
               <SidebarMenu>
                 {
                   <SidebarMenuItem onClick={toggleSideBarOnMobile}>
-                    <SidebarMenuButton asChild isActive={item.url?.startsWith(pathname)} size="lg">
+                    <SidebarMenuButton
+                      asChild
+                      isActive={normalize(pathname).startsWith(normalize(item.url ?? ""))}
+                      size="default"
+                    >
                       <Link href={item.url ? item.url : "#"}>
                         {Icon && <Icon />}
                         <span>{item.title}</span>

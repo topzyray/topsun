@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useContext, useState } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import { useForm } from "react-hook-form";
 import { z } from "zod";
 import { zodResolver } from "@hookform/resolvers/zod";
@@ -105,7 +105,18 @@ export default function CreateExamTimetableTwoSection({ params }: { params: Reco
   } = useCustomQuery(["results", "teacherById", class_level || ""], () =>
     ResultApiService.getLevelResultSetting({ level: class_level }),
   );
+
   const resultSettingsComponents = resultSettings?.result_setting;
+
+  const cbtObj =
+    resultSettingsComponents?.flattenedComponents?.length &&
+    resultSettingsComponents?.flattenedComponents?.find((item: any) => item.key === "obj");
+
+  useEffect(() => {
+    if (cbtObj) {
+      selectorForm.setValue("assessment_type", TextHelper.allToUpperCase(cbtObj?.name));
+    }
+  }, [cbtObj, itemForm, selectorForm]);
 
   // Mutation to submit full timetable (level + assessment_type + timetable_array)
   const { mutate: createExamTimetable, isPending: isCreatingExamTimetable } = useCustomMutation(
@@ -193,32 +204,34 @@ export default function CreateExamTimetableTwoSection({ params }: { params: Reco
             <form className="grid grid-cols-1 gap-4 md:grid-cols-2">
               {/* ASSESSMENT TYPE */}
               {class_level ? (
-                isLoadingResultSetting ? (
-                  <CircularLoader text={`Loading result settings ${class_level}`} />
-                ) : resultSettingsComponents?.flattenedComponents?.length ? (
-                  <ComboboxComponent
-                    formName="assessment_type"
-                    formControl={selectorForm.control}
-                    formLabel="Assessment Type"
-                    formOptionLabel="Select assessment type"
-                    formOptionData={resultSettingsComponents.flattenedComponents}
-                    formPlaceholder=""
-                    disabled={isCreatingExamTimetable}
-                    displayValue={(data: any) => data.name}
-                    valueField="name"
-                  />
-                ) : isResultSettingError ? (
-                  <ErrorBox error={resultSetttingError} containerClassName="md:self-end md:mb-2" />
-                ) : (
-                  <InputComponent
-                    formName="assessment_type"
-                    formControl={selectorForm.control}
-                    formLabel="Assessment Type"
-                    formInputType="text"
-                    formPlaceholder="e.g. First term exam"
-                    disabled={isCreatingExamTimetable}
-                  />
-                )
+                <>
+                  {isLoadingResultSetting ? (
+                    <CircularLoader text="Loading result settings" />
+                  ) : resultSettingsComponents?.flattenedComponents?.length ? (
+                    // <ComboboxComponent
+                    //   formName="assessment_type"
+                    //   formControl={itemForm.control}
+                    //   formLabel="Assessment Type"
+                    //   formOptionLabel="Select assessment type"
+                    //   formPlaceholder=""
+                    //   formOptionData={resultSettingsComponents.flattenedComponents}
+                    //   disabled={isCreatingExamTermDoc}
+                    //   displayValue={(data: any) => data.name}
+                    //   valueField="name"
+                    // />
+                    <InputComponent
+                      formName="assessment_type"
+                      formControl={selectorForm.control}
+                      formLabel="Assessment Type"
+                      formInputType="text"
+                      formPlaceholder=""
+                      disabled={isCreatingExamTimetable}
+                      readOnly
+                    />
+                  ) : isResultSettingError ? (
+                    <ErrorBox error={resultSetttingError} />
+                  ) : null}
+                </>
               ) : (
                 // keep the second column space balanced
                 <div />
@@ -235,7 +248,7 @@ export default function CreateExamTimetableTwoSection({ params }: { params: Reco
 
       {/* SECTION 2: Timetable CRUD (left: form; right: table view) */}
       {class_level && assessment_type_watch && (
-        <div className="grid w-full grid-cols-1 gap-4 md:grid-cols-3">
+        <div className="grid w-full grid-cols-1 gap-4 lg:grid-cols-3">
           {/* Left: Add/Edit item */}
           <Card className="col-span-1 w-full bg-transparent">
             <CardHeader>

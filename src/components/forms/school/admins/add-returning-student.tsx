@@ -245,7 +245,7 @@ export default function AddReturningStudents({
                       formPlaceholder=""
                       disabled={isEnrolling}
                       formInputType="text"
-                      editable={true}
+                      readOnly={true}
                     />
 
                     <ComboboxComponent
@@ -271,7 +271,7 @@ export default function AddReturningStudents({
                       formPlaceholder=""
                       disabled={isEnrolling}
                       formInputType="text"
-                      editable={true}
+                      readOnly={true}
                     />
                   </>
                 ) : (

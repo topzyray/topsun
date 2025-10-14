@@ -233,7 +233,7 @@ type InputComponentProps = {
   isPassword?: boolean;
   formMaxYear?: string;
   formMinYear?: string;
-  editable?: boolean;
+  readOnly?: boolean;
   disabled?: boolean;
   inputClassName?: string;
 };

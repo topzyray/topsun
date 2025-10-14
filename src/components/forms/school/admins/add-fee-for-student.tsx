@@ -180,7 +180,7 @@ export default function AddFeeForStudent({
                     formLabel="Account Name"
                     formInputType="text"
                     disabled={isAddingFee}
-                    editable={true}
+                    readOnly={true}
                   />
 
                   <InputComponent
@@ -189,7 +189,7 @@ export default function AddFeeForStudent({
                     formLabel="Bank Name"
                     formInputType="text"
                     disabled={isAddingFee}
-                    editable={true}
+                    readOnly={true}
                   />
                 </div>
               ) : isAccountError ? (
