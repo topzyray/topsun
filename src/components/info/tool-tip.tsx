@@ -5,14 +5,14 @@ interface ToolTipProps {
   message: React.ReactNode | string;
 }
 
-export default function TooltipComponent({ trigger, message }: ToolTipProps) {
+export default function TooltipComponent({ trigger, message, ...props }: ToolTipProps) {
   return (
     <TooltipProvider>
-      <Tooltip>
-        <TooltipTrigger asChild suppressHydrationWarning>
+      <Tooltip {...props}>
+        <TooltipTrigger asChild suppressHydrationWarning {...props}>
           {trigger}
         </TooltipTrigger>
-        <TooltipContent>
+        <TooltipContent {...props}>
           <span>{message}</span>
         </TooltipContent>
       </Tooltip>

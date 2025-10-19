@@ -242,6 +242,7 @@ type ImageComponentProps = {
   formControl: any;
   formName: string;
   formLabel: ReactNode;
+  className?: string;
   disabled: boolean;
   multiple?: boolean;
 };

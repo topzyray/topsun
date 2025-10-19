@@ -39,7 +39,7 @@ export default function UserProfileDropdown({ userData }: { userData: User }) {
               className="h-6 w-6 rounded-full"
             />
           ) : (
-            <CircleUserRound size={35} className="text-primary" />
+            <CircleUserRound size={35} />
           )}
           <span className="hidden sm:block">
             {TextHelper.capitalize(userData?.first_name as string)}
@@ -58,7 +58,7 @@ export default function UserProfileDropdown({ userData }: { userData: User }) {
               className="h-6 w-6 rounded-full"
             />
           ) : (
-            <CircleUserRound size={35} className="text-primary" />
+            <CircleUserRound size={35} />
           )}{" "}
           {userData &&
             userData !== null &&

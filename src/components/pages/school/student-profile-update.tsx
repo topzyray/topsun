@@ -103,12 +103,14 @@ export default function StudentProfileOnboardingForm() {
           onSubmit={form.handleSubmit(onSubmit)}
           className="mx-auto flex w-full max-w-md flex-col space-y-4 py-6"
         >
-          <ImageComponent
-            formName="image"
-            formControl={form.control}
-            formLabel="Profle Image"
-            disabled={isOnBoardingStudent}
-          />
+          <div>
+            <ImageComponent
+              formName="image"
+              formControl={form.control}
+              formLabel="Profle Image"
+              disabled={isOnBoardingStudent}
+            />
+          </div>
 
           {/* {image_data === undefined || !(image_data instanceof File) ? (
               <FormLabel>No image</FormLabel>

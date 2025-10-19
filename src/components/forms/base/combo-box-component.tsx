@@ -39,8 +39,8 @@ export function ComboboxComponent({
       control={formControl}
       name={formName}
       render={({ field }) => (
-        <FormItem className="flex flex-col space-y-0.5">
-          <FormLabel className="text-lg">{formLabel}</FormLabel>
+        <FormItem className="flex flex-col">
+          <FormLabel>{formLabel}</FormLabel>
           <Popover>
             <PopoverTrigger asChild className="py-5 lg:py-6">
               <FormControl>

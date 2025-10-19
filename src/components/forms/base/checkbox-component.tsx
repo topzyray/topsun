@@ -63,7 +63,7 @@ export default function CheckboxComponent({
       render={({ field }) => (
         <FormItem>
           <div>
-            <FormLabel className="text-base">{formLabel}</FormLabel>
+            <FormLabel>{formLabel}</FormLabel>
             <FormDescription>{formDescription}</FormDescription>
           </div>
 

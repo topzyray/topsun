@@ -24,8 +24,8 @@ export default function TextAreaComponent({
       control={formControl}
       name={formName}
       render={({ field }) => (
-        <FormItem className="flex flex-col space-y-0.5">
-          <FormLabel className="text-lg">{formLabel}</FormLabel>
+        <FormItem className="flex flex-col">
+          <FormLabel>{formLabel}</FormLabel>
           <FormControl>
             <Textarea
               placeholder={formPlaceholder}

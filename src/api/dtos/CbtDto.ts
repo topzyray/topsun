@@ -41,6 +41,10 @@ export type createTermClassExamTimetableDto = {
   term: string;
 };
 
+export type updateTermClassTimeTableDto = {
+  selected_time: string;
+};
+
 export type classTeacherAuthorizeStudentsToWriteSubjectDto = {
   students_id_array: string[];
   term: string;

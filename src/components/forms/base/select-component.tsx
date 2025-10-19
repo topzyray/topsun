@@ -25,8 +25,8 @@ export default function SelectComponent({
       control={formControl}
       name={formName}
       render={({ field }) => (
-        <FormItem className="space-y-0.5">
-          <FormLabel className="text-lg">{formLabel}</FormLabel>
+        <FormItem>
+          <FormLabel>{formLabel}</FormLabel>
           <Select onValueChange={field.onChange} value={field.value} disabled={disabled}>
             <FormControl>
               <SelectTrigger className={`py-5 text-lg lg:py-6 ${inputClassName}`}>

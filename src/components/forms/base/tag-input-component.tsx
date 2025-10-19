@@ -64,7 +64,7 @@ export function TagInputComponent<T extends FieldValues>({
 
         return (
           <FormItem>
-            {formLabel && <FormLabel className="text-lg">{formLabel}</FormLabel>}
+            {formLabel && <FormLabel>{formLabel}</FormLabel>}
 
             <FormControl>
               <div className="focus-within:ring-foreground flex min-h-[50px] flex-wrap items-center gap-2 rounded-md border px-3 py-2 focus-within:ring-2">

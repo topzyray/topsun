@@ -39,8 +39,8 @@ export default function InputComponent({
         };
 
         return (
-          <FormItem className="space-y-0.5">
-            <FormLabel className={`text-lg ${isPassword && "flex items-center justify-between"}`}>
+          <FormItem>
+            <FormLabel className={`${isPassword && "flex items-center justify-between"}`}>
               {formLabel}{" "}
               {isPassword && (
                 <span className="cursor-pointer">

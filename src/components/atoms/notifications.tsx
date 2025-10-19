@@ -14,15 +14,15 @@ export function Notifications() {
     <DropdownMenu>
       <DropdownMenuTrigger asChild>
         <Button variant="ghost" size="icon" className="relative rounded-full px-4">
-          <section className="relative flex cursor-pointer text-slate-500 hover:scale-105 dark:text-white">
+          <section className="relative flex cursor-pointer hover:scale-105">
             <span className="bg-meta-1 absolute -top-0.5 right-0 z-10 h-1.5 w-1.5 rounded-full bg-red-600">
               <span className="bg-meta-1 absolute -top-0.5 -right-0.5 -z-10 inline-flex h-2.5 w-2.5 animate-ping rounded-full bg-red-700 opacity-75"></span>
             </span>
-            <BellIcon className="scale-100 rotate-0 transition-all" />
+            <BellIcon />
           </section>
         </Button>
       </DropdownMenuTrigger>
-      <DropdownMenuContent align="end" className="min-h-[10rem] w-full max-w-max space-y-2 p-4">
+      <DropdownMenuContent align="start" className="min-h-[15rem] w-full space-y-2 p-4">
         <DropdownMenuItem>
           <Label>Available Notifications</Label>
         </DropdownMenuItem>

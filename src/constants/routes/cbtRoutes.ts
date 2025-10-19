@@ -17,7 +17,8 @@ type ICbtApi =
   | "getTermClassExamTimetable"
   | "getAllAssessmentDocument"
   | "getAssessmentDocumentById"
-  | "getAllClassCbtAssessmentTimetables";
+  | "getAllClassCbtAssessmentTimetables"
+  | "updateClassCbtTimetable";
 
 const rawCbtRoutes: Record<ICbtApi, string> = {
   createTermExamDocumentInASchool: "/cbt/create-term-exam-document",
@@ -35,6 +36,7 @@ const rawCbtRoutes: Record<ICbtApi, string> = {
   getAllAssessmentDocument: "/cbt/all-exam-documents",
   getAssessmentDocumentById: "/cbt/get-exam-document-by-id",
   getAllClassCbtAssessmentTimetables: "/cbt/get-term-class-exam-timetable",
+  updateClassCbtTimetable: "/cbt/update-term-class-exam-timetable",
 };
 
 // Use the function to create routes with the base path

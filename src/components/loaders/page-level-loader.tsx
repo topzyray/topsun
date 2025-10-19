@@ -65,14 +65,14 @@ export function CircularLoader({
     >
       <div
         className={cn(
-          "border-primary mx-auto h-10 w-10 animate-spin rounded-full border-6 border-dashed",
+          "border-primary mx-auto h-8 w-8 animate-spin rounded-full border-4 border-dashed",
           rollerClassName,
         )}
         {...props}
       ></div>
       <p
         className={cn(
-          "mt-1 animate-pulse text-base font-semibold capitalize lg:font-semibold",
+          "mt-1 animate-pulse text-sm font-semibold capitalize lg:font-semibold",
           textClassName,
         )}
         {...props}

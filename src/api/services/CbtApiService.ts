@@ -9,6 +9,7 @@ import {
   submitSubjectCbtObjExamForAClassDto,
   updateSubjectCbtObjExamForAClassDto,
   updateSubjectCbtObjExamRemainingTimeForAClassDto,
+  updateTermClassTimeTableDto,
 } from "../dtos/CbtDto";
 
 export class CbtApiService {
@@ -187,6 +188,23 @@ export class CbtApiService {
   public static async getAssessmentDocumentById(params: { exam_document_id: string }) {
     const response = await HttpClient.getClient().get(
       `${cbtRoutes.getAssessmentDocumentById}/${params.exam_document_id}`,
+    );
+    return response.data;
+  }
+
+  public static async updateClassCbtTimetable({
+    requestBody,
+    params,
+  }: {
+    requestBody: updateTermClassTimeTableDto;
+    params: {
+      timetable_id: string;
+      subject_id: string;
+    };
+  }) {
+    const response = await HttpClient.getClient().put(
+      `${cbtRoutes.updateClassCbtTimetable}/${params.timetable_id}/${params.subject_id}`,
+      requestBody,
     );
     return response.data;
   }

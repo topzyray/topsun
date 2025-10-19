@@ -13,7 +13,15 @@ import {
   getSortedRowModel,
   useReactTable,
 } from "@tanstack/react-table";
-import { ArrowUpDown, ChevronDown, MoreHorizontal } from "lucide-react";
+import {
+  ArrowUpDown,
+  BadgeInfoIcon,
+  ChevronDown,
+  Edit,
+  MoreHorizontal,
+  Trash,
+  X,
+} from "lucide-react";
 
 import { Button } from "@/components/ui/button";
 import {
@@ -43,12 +51,72 @@ import { TextHelper } from "@/helpers/TextHelper";
 import { CbtApiService } from "@/api/services/CbtApiService";
 import { GlobalContext } from "@/providers/global-state-provider";
 import { ExamStatusTypeEnum } from "@/api/enums/ExamStatusTypeEnum";
+import { UpdateTermClassTimetableForm } from "@/components/forms/cbt/updateTermClassTimetableForm";
+import toast from "react-hot-toast";
+import TooltipComponent from "@/components/info/tool-tip";
 
 const ActionCell = ({ row }: { row: any }) => {
   const Session = row.original;
 
+  const handleEndExam = (examData: any) => {
+    // TODO
+    // Add all the logic to end this exam
+    console.log(examData);
+
+    toast("This feature is pending! ID to delete: " + examData?._id, {
+      style: {
+        backgroundColor: "lightgreen",
+      },
+      icon: <BadgeInfoIcon size={15} />,
+    });
+  };
+
   return (
     <div className="flex items-center gap-3">
+      <div className="flex gap-2">
+        <UpdateTermClassTimetableForm
+          trigger={
+            <TooltipComponent
+              trigger={
+                <Button variant="outline" size="sm">
+                  <Edit size={16} />
+                </Button>
+              }
+              message={<span>Edit Exam</span>}
+            />
+          }
+          initialData={Session}
+          onSuccess={() => {}}
+        />
+
+        <TooltipComponent
+          trigger={
+            <Button
+              variant="destructive"
+              size="sm"
+              onClick={() => {
+                handleEndExam(Session);
+              }}
+            >
+              <X size={16} />
+            </Button>
+          }
+          message={<span>End Exam</span>}
+        />
+
+        <TooltipComponent
+          trigger={
+            <Button
+              variant="destructive"
+              size="sm"
+              // onClick={() => onDelete(business.id)}
+            >
+              <Trash size={16} />
+            </Button>
+          }
+          message={<span>Delete Entry</span>}
+        />
+      </div>
       <DropdownMenu>
         <DropdownMenuTrigger asChild>
           <Button variant="ghost" className="h-8 w-8 p-0">

@@ -24,7 +24,7 @@ export default function CBTLanding() {
   const router = useRouter();
 
   const renderErrorButton = () => {
-    if (!student?.current_class?.class_id?._id) {
+    if (!student?.current_class?.class_id?._id || !!student?.current_class?.class_id) {
       if (!student?.active_class_enrolment) {
         return (
           <TooltipComponent
@@ -38,13 +38,29 @@ export default function CBTLanding() {
             trigger={
               <Button
                 variant="destructive"
-                onClick={() => router.push("/dashboard/student/onboarding")}
+                // onClick={() => router.push("/dashboard/student/onboarding")}
               >
-                Update Profile First
+                No Active Class Enrollments
               </Button>
             }
-            message={<p>You need to update your profile to proceed</p>}
+            message={
+              <p className="p-2">
+                You have no active class enrollment. <br />
+                Please contact your school authority.
+              </p>
+            }
           />
+          // <TooltipComponent
+          //   trigger={
+          //     <Button
+          //       variant="destructive"
+          //       // onClick={() => router.push("/dashboard/student/onboarding")}
+          //     >
+          //       Update Profile First
+          //     </Button>
+          //   }
+          //   message={<p>You need to update your profile to proceed</p>}
+          // />
         );
       }
     } else {

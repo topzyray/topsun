@@ -7,12 +7,25 @@ import { AssessmentsDocumentTable } from "@/components/tables/school/admins/asse
 import { useAuth } from "@/api/hooks/use-auth.hook";
 import { RoleTypeEnum } from "@/api/enums/RoleTypeEnum";
 import { useRouter } from "next/navigation";
+import { toast } from "react-hot-toast";
+import { InfoIcon } from "lucide-react";
 
 export default function CbtComponent() {
   // const [openCreateCutOffMinutesForm, setOpenCreateCutOffMinutesForm] = useState(false);
   const { userDetails } = useAuth();
 
   const router = useRouter();
+
+  const handleEndAllAssessments = () => {
+    // TODO
+    // Add all the logic to end all assessments
+    toast("This feature is pending!", {
+      style: {
+        backgroundColor: "lightgreen",
+      },
+      icon: <InfoIcon size={15} />,
+    });
+  };
 
   return (
     <div className="flex flex-col gap-4">
@@ -27,9 +40,9 @@ export default function CbtComponent() {
             <Button onClick={() => router.push("cbt/create_assessment_document")} type="button">
               Create Assessment Document
             </Button>
-            {/* <Button onClick={() => setOpenCreateCutOffMinutesForm(true)} type="button">
-              Create Cut-off Minutes
-            </Button> */}
+            <Button onClick={handleEndAllAssessments} type="button">
+              End All Assessments
+            </Button>
           </div>
         </>
       )}
