@@ -65,7 +65,7 @@ const ActionCell = ({ row }: { row: any }) => {
   const handleEndExam = (examData: any) => {
     endExamTimetableMutation.mutate({
       params: {
-        subject_id: examData?.subject_id,
+        subject_id: examData?.subject_id?._id,
         timetable_id: examData?.timetable_id,
       },
     });
@@ -97,6 +97,7 @@ const ActionCell = ({ row }: { row: any }) => {
               onClick={() => {
                 handleEndExam(Session);
               }}
+              disabled={Session?.exam_subject_status === "ended"}
             >
               {endExamTimetableMutation.isPending ? (
                 <ComponentLevelLoader loading={endExamTimetableMutation?.isPending} text="" />
