@@ -17,6 +17,7 @@ import {
   CardTitle,
 } from "@/components/ui/card";
 import { ChartConfig, ChartContainer } from "@/components/ui/chart";
+import { Badge } from "../ui/badge";
 
 type RadialChartCardProps = {
   title: string;
@@ -46,11 +47,11 @@ export function RadialChartCard({
   return (
     <Card className="flex w-full flex-col">
       <CardHeader className="items-center pb-0">
-        <CardTitle>{title}</CardTitle>
+        <CardTitle className="text-lg font-semibold">{title}</CardTitle>
         {description && <CardDescription>{description}</CardDescription>}
       </CardHeader>
       <CardContent className="flex-1 pb-0">
-        <ChartContainer config={config} className="mx-auto aspect-square max-h-[250px]">
+        <ChartContainer config={config} className="mx-auto aspect-square max-h-[175px]">
           <ResponsiveContainer width="100%" height="100%">
             <RadialBarChart
               data={data}
@@ -63,7 +64,7 @@ export function RadialChartCard({
                 gridType="circle"
                 radialLines={false}
                 stroke="none"
-                className="first:fill-muted last:fill-background"
+                className="first:fill-muted last:fill-card"
                 polarRadius={[86, 74]}
               />
               <RadialBar dataKey={dataKey} background />
@@ -85,11 +86,7 @@ export function RadialChartCard({
                           >
                             {centerValue.toLocaleString()}
                           </tspan>
-                          <tspan
-                            x={viewBox.cx}
-                            y={(viewBox.cy || 0) + 24}
-                            className="fill-muted-foreground"
-                          >
+                          <tspan x={viewBox.cx} y={(viewBox.cy || 0) + 24} className="fill-primary">
                             {label}
                           </tspan>
                         </text>
@@ -105,7 +102,9 @@ export function RadialChartCard({
       </CardContent>
       <CardFooter className="flex-col gap-2 text-sm">
         <div className="flex items-center gap-2 leading-none font-medium">{statChangeText}</div>
-        <div className="text-muted-foreground leading-none">{footerText}</div>
+        <div>
+          <Badge>{footerText}</Badge>
+        </div>
       </CardFooter>
     </Card>
   );

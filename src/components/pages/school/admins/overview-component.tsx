@@ -1,8 +1,7 @@
 "use client";
 
 import { useAuth } from "@/api/hooks/use-auth.hook";
-import { SchoolOwnerAdminOverview } from "../../../../../types";
-import SchoolInfoHero from "@/components/carousels/school/SchoolInfoHero";
+import { SchoolOwnerAdminOverview, SummaryObject } from "../../../../../types";
 import { RadialChartCard } from "@/components/charts/RadialChartCard";
 import { BarChartCard } from "@/components/charts/BarChartCard";
 import { useCustomQuery } from "@/api/hooks/queries/use-query.hook";
@@ -10,8 +9,14 @@ import { AdminApiService } from "@/api/services/AdminApiService";
 import ErrorBox from "@/components/atoms/error-box";
 import { CircularLoader } from "@/components/loaders/page-level-loader";
 import { Separator } from "@/components/ui/separator";
-import { useContext } from "react";
+import { ReactNode, useContext } from "react";
 import { GlobalContext } from "@/providers/global-state-provider";
+import { Card, CardContent } from "@/components/ui/card";
+import { Badge } from "@/components/ui/badge";
+import { motion } from "framer-motion";
+import { Settings, Shield, Users } from "lucide-react";
+import { Button } from "@/components/ui/button";
+import { TextHelper } from "@/helpers/TextHelper";
 
 export default function SchoolOwnerAdminOverviewComponent() {
   const { userDetails } = useAuth();
@@ -39,50 +44,60 @@ export default function SchoolOwnerAdminOverviewComponent() {
 
   return (
     <div className="z-10">
-      <div className="flex flex-col gap-0">
+      <div className="mx-auto flex flex-col gap-0 px-4 sm:container sm:px-0">
         {/* <SchoolInfoHero schoolDetails={schoolDetails as School} /> */}
 
-        <Separator />
+        <div className="mt-4 flex w-full flex-wrap items-center justify-between md:mt-6">
+          <div>
+            <h1 className="text-foreground flex items-center gap-3 text-xl font-bold md:text-3xl">
+              <Shield className="text-primary h-8 w-8" />
+              {TextHelper.capitalizeWords(userDetails?.role?.replace("_", " ") as string)} Dashboard
+            </h1>
+            <p className="text-muted-foreground mt-1">System overview and management</p>
+          </div>
+          <Button variant="outline">
+            <Settings className="mr-2 h-4 w-4" />
+            System Settings
+          </Button>
+        </div>
+
+        <div className="mt-4">
+          <Separator />
+          <Separator />
+          <Separator />
+          <Separator />
+          <Separator />
+          <Separator />
+          <Separator />
+          <Separator />
+          <Separator />
+          <Separator />
+        </div>
 
         {isLoading ? (
-          <CircularLoader text="Loading overview data..." parentClassName="mt-8" />
+          <CircularLoader
+            text="Loading overview data..."
+            parentClassName="mt-20"
+            textClassName="text-base"
+          />
         ) : overviewData ? (
           <>
             <div className="space-y-6 border-b py-10">
               <div>
                 <h1 className="text-center text-3xl font-bold md:text-5xl">Analytics</h1>
               </div>
-              <div className="flex flex-wrap items-center justify-center gap-4">
-                {usersSummaryData &&
-                  usersSummaryData.map((summary) => (
-                    <div
-                      key={summary?.key}
-                      className="w-full flex-shrink-0 sm:w-[300px] md:w-[250px] lg:w-[300px] xl:w-[320px]"
-                    >
-                      <RadialChartCard
-                        title={summary?.title}
-                        data={[
-                          {
-                            // browser: "safari",
-                            [summary?.key]: summary.total_count,
-                            // fill: "var(--color-safari)",
-                          },
-                        ]}
-                        config={{
-                          [summary?.key]: { label: summary?.key },
-                          // safari: {
-                          //   label: "Safari",
-                          //   color: "hsl(var(--chart-2))",
-                          // },
-                        }}
-                        dataKey={summary?.key}
-                        label={summary?.title}
-                        // statChangeText="Trending up by 5.2% this month"
-                        footerText={summary?.summary}
-                        endAngle={summary?.total_count}
-                      />
-                    </div>
-                  ))}
+              <div
+                // className="flex flex-wrap items-center justify-center gap-4"
+                className="mx-auto grid w-full grid-cols-1 gap-6 md:grid-cols-2 lg:grid-cols-3"
+              >
+                {usersSummaryData.map((stat, index) => (
+                  <StatsCard
+                    key={index}
+                    stat={stat}
+                    index={index}
+                    icon={<Users className="text-primary h-8 w-8" />}
+                  />
+                ))}
               </div>
             </div>
 
@@ -217,5 +232,32 @@ export default function SchoolOwnerAdminOverviewComponent() {
         )}
       </div>
     </div>
+  );
+}
+
+function StatsCard({ stat, index, icon }: { stat: SummaryObject; index: number; icon: ReactNode }) {
+  return (
+    <motion.div
+      key={stat.title}
+      initial={{ opacity: 0, y: 20 }}
+      animate={{ opacity: 1, y: 0 }}
+      transition={{ delay: index * 0.1, duration: 0.5 }}
+      className="w-full"
+    >
+      <Card className="shadow-card">
+        <CardContent className="p-6">
+          <div className="flex items-center justify-between">
+            <div>
+              <p className="text-muted-foreground text-lg font-medium">Total {stat?.title}</p>
+              <p className="text-6xl font-bold">{stat?.total_count}</p>
+              <Badge variant="default" className="mt-1">
+                {stat?.summary}
+              </Badge>
+            </div>
+            {icon}
+          </div>
+        </CardContent>
+      </Card>
+    </motion.div>
   );
 }
