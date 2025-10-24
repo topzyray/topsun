@@ -726,8 +726,9 @@ type ScheduledTimetableSubject = {
 
 type ClassExamTimetable = {
   _id: string;
-  school: string;
+  assessment_type: string;
   exam_id: string;
+  is_active: boolean;
   academic_session_id: string;
   class_id: string;
   term: string;
