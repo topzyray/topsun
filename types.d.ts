@@ -713,6 +713,7 @@ type TermExamDocument = {
 type ScheduledTimetableSubject = {
   _id: string;
   subject_id: Subject;
+  timetable_id: string;
   start_time: string;
   duration: number;
   exam_subject_status: ExamStatusTypeEnum;
@@ -737,6 +738,7 @@ type ClassExamTimetable = {
 
 type AssessmentDocument = {
   _id: string;
+  assessment_type: string;
   academic_session_id: string;
   term: string;
   min_obj_questions: number;

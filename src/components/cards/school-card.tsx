@@ -77,6 +77,7 @@ export const SchoolsList = () => {
                     <Button variant="outline" size="sm" className="mr-2">
                       View Details
                     </Button>
+
                     <Button variant="link" size="sm">
                       Edit
                     </Button>

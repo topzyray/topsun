@@ -13,7 +13,7 @@ import {
   getSortedRowModel,
   useReactTable,
 } from "@tanstack/react-table";
-import { ArrowUpDown, ChevronDown, MoreHorizontal } from "lucide-react";
+import { ArrowUpDown, ChevronDown, MoreHorizontal, View } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import {
   DropdownMenu,
@@ -47,6 +47,7 @@ import { useAuth } from "@/api/hooks/use-auth.hook";
 import { GlobalContext } from "@/providers/global-state-provider";
 import ModalComponent from "@/components/modals/base/modal-component";
 import AuthorizeStudentToStartExamForm from "@/components/forms/cbt/authorize-student-start-exam";
+import TooltipComponent from "@/components/info/tool-tip";
 
 const ActionCell = ({ row }: { row: any }) => {
   const router = useRouter();
@@ -54,14 +55,19 @@ const ActionCell = ({ row }: { row: any }) => {
 
   return (
     <div className="flex items-center gap-3">
-      <Button
-        size="sm"
-        variant="link"
-        onClick={() => router.push(`students/${Session._id}`)}
-        className="px-0 text-sm font-normal"
-      >
-        Details
-      </Button>
+      <TooltipComponent
+        trigger={
+          <Button
+            onClick={() => router.push(`students/${Session._id}`)}
+            variant="outline"
+            size="icon"
+            className="hover:text-primary"
+          >
+            <View size={16} className="hover:text-primary cursor-pointer" />
+          </Button>
+        }
+        message={<span>View Details</span>}
+      />
       <DropdownMenu>
         <DropdownMenuTrigger asChild>
           <Button variant="ghost" className="h-8 w-8 p-0">

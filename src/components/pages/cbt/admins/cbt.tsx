@@ -16,16 +16,16 @@ export default function CbtComponent() {
 
   const router = useRouter();
 
-  const handleEndAllAssessments = () => {
-    // TODO
-    // Add all the logic to end all assessments
-    toast("This feature is pending!", {
-      style: {
-        backgroundColor: "lightgreen",
-      },
-      icon: <InfoIcon size={15} />,
-    });
-  };
+  // const handleEndAllAssessments = () => {
+  //   // TODO
+  //   // Add all the logic to end all assessments
+  //   toast("This feature is pending!", {
+  //     style: {
+  //       backgroundColor: "lightgreen",
+  //     },
+  //     icon: <InfoIcon size={15} />,
+  //   });
+  // };
 
   return (
     <div className="flex flex-col gap-4">
@@ -40,9 +40,9 @@ export default function CbtComponent() {
             <Button onClick={() => router.push("cbt/create_assessment_document")} type="button">
               Create Assessment Document
             </Button>
-            <Button onClick={handleEndAllAssessments} type="button">
+            {/* <Button onClick={handleEndAllAssessments} type="button">
               End All Assessments
-            </Button>
+            </Button> */}
           </div>
         </>
       )}

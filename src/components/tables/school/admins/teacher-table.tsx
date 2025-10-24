@@ -13,7 +13,7 @@ import {
   getSortedRowModel,
   useReactTable,
 } from "@tanstack/react-table";
-import { ArrowUpDown, ChevronDown, MoreHorizontal } from "lucide-react";
+import { ArrowUpDown, ChevronDown, MoreHorizontal, View } from "lucide-react";
 
 import { Button } from "@/components/ui/button";
 import {
@@ -49,6 +49,7 @@ import ModalComponent from "@/components/modals/base/modal-component";
 import { TextHelper } from "@/helpers/TextHelper";
 import { useRouter } from "next/navigation";
 import ChangeClassTeacher from "@/components/forms/school/admins/change-class-teacher";
+import TooltipComponent from "@/components/info/tool-tip";
 
 const ActionCell = ({ row }: { row: any }) => {
   const [openAssignTeacherToClassForm, setOpenAssignTeacherToClassForm] = React.useState(false);
@@ -59,15 +60,20 @@ const ActionCell = ({ row }: { row: any }) => {
   const router = useRouter();
 
   return (
-    <div className="flex items-center gap-3">
-      <Button
-        size="sm"
-        variant="link"
-        onClick={() => router.push(`teachers/${Session._id}`)}
-        className="px-0 text-sm font-normal"
-      >
-        Details
-      </Button>
+    <div className="flex items-center gap-1">
+      <TooltipComponent
+        trigger={
+          <Button
+            onClick={() => router.push(`teachers/${Session._id}`)}
+            variant="outline"
+            size="icon"
+            className="hover:text-primary"
+          >
+            <View size={16} className="hover:text-primary cursor-pointer" />
+          </Button>
+        }
+        message={<span>View Details For {TextHelper.capitalizeWords(Session.first_name)}</span>}
+      />
       <DropdownMenu>
         <DropdownMenuTrigger asChild>
           <Button variant="ghost" className="h-8 w-8 p-0">

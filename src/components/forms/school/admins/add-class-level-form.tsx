@@ -84,7 +84,7 @@ export default function AddClassLevelForSchoolForm({
               formLabel="Class Level"
               formPlaceholder="Add class level"
               enableSuggestions
-              suggestions={["Pry 1", "JSS 1", "JSS 2", "JSS 3", "SSS 1", "SSS 2", "SSS 3"]}
+              suggestions={["JSS 1", "JSS 2", "JSS 3", "SSS 1", "SSS 2", "SSS 3"]}
             />
 
             <DialogFooter>

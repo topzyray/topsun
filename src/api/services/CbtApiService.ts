@@ -208,4 +208,31 @@ export class CbtApiService {
     );
     return response.data;
   }
+
+  public static async endTakingASubjectInATimetableForATerm({
+    params,
+  }: {
+    params: {
+      timetable_id: string;
+      subject_id: string;
+    };
+  }) {
+    const response = await HttpClient.getClient().put(
+      `${cbtRoutes.endTakingASubjectInATimetableForATerm}/${params.timetable_id}/${params.subject_id}`,
+    );
+    return response.data;
+  }
+
+  public static async endTermCbtAssessmentDocument({
+    params,
+  }: {
+    params: {
+      exam_document_id: string;
+    };
+  }) {
+    const response = await HttpClient.getClient().put(
+      `${cbtRoutes.endTermCbtAssessmentDocument}/${params.exam_document_id}`,
+    );
+    return response.data;
+  }
 }

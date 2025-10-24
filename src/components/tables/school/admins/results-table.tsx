@@ -13,7 +13,7 @@ import {
   getSortedRowModel,
   useReactTable,
 } from "@tanstack/react-table";
-import { ArrowUpDown, ChevronDown, MoreHorizontal } from "lucide-react";
+import { ArrowUpDown, ChevronDown, MoreHorizontal, View } from "lucide-react";
 
 import { Button } from "@/components/ui/button";
 import {
@@ -48,15 +48,20 @@ const ActionCell = ({ row }: { row: any }) => {
   const Session = row.original;
 
   return (
-    <div className="flex items-center gap-3">
-      <Button
-        size="sm"
-        variant="link"
-        onClick={() => router.push(`results/${Session._id}`)}
-        className="px-0 text-sm font-normal"
-      >
-        Details
-      </Button>
+    <div className="flex items-center gap-1">
+      <TooltipComponent
+        trigger={
+          <Button
+            onClick={() => router.push(`results/${Session._id}`)}
+            variant="outline"
+            size="icon"
+            className="hover:text-primary"
+          >
+            <View size={16} className="hover:text-primary cursor-pointer" />
+          </Button>
+        }
+        message={<span>View Details</span>}
+      />
       <DropdownMenu>
         <DropdownMenuTrigger asChild>
           <Button variant="ghost" className="h-8 w-8 p-0">

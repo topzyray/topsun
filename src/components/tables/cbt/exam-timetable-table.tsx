@@ -13,15 +13,7 @@ import {
   getSortedRowModel,
   useReactTable,
 } from "@tanstack/react-table";
-import {
-  ArrowUpDown,
-  BadgeInfoIcon,
-  ChevronDown,
-  Edit,
-  MoreHorizontal,
-  Trash,
-  X,
-} from "lucide-react";
+import { ArrowUpDown, Ban, ChevronDown, Edit, MoreHorizontal, Trash } from "lucide-react";
 
 import { Button } from "@/components/ui/button";
 import {
@@ -52,22 +44,30 @@ import { CbtApiService } from "@/api/services/CbtApiService";
 import { GlobalContext } from "@/providers/global-state-provider";
 import { ExamStatusTypeEnum } from "@/api/enums/ExamStatusTypeEnum";
 import { UpdateTermClassTimetableForm } from "@/components/forms/cbt/updateTermClassTimetableForm";
-import toast from "react-hot-toast";
 import TooltipComponent from "@/components/info/tool-tip";
+import { useCustomMutation } from "@/api/hooks/queries/use-mutation.hook";
+import { useQueryClient } from "@tanstack/react-query";
+import ComponentLevelLoader from "@/components/loaders/component-level-loader";
 
 const ActionCell = ({ row }: { row: any }) => {
   const Session = row.original;
+  const queryClient = useQueryClient();
+
+  const endExamTimetableMutation = useCustomMutation(
+    CbtApiService.endTakingASubjectInATimetableForATerm,
+    {
+      onSuccessCallback: () => {
+        queryClient.invalidateQueries({ queryKey: ["timetable"] });
+      },
+    },
+  );
 
   const handleEndExam = (examData: any) => {
-    // TODO
-    // Add all the logic to end this exam
-    console.log(examData);
-
-    toast("This feature is pending! ID to delete: " + examData?._id, {
-      style: {
-        backgroundColor: "lightgreen",
+    endExamTimetableMutation.mutate({
+      params: {
+        subject_id: examData?.subject_id,
+        timetable_id: examData?.timetable_id,
       },
-      icon: <BadgeInfoIcon size={15} />,
     });
   };
 
@@ -98,23 +98,23 @@ const ActionCell = ({ row }: { row: any }) => {
                 handleEndExam(Session);
               }}
             >
-              <X size={16} />
+              {endExamTimetableMutation.isPending ? (
+                <ComponentLevelLoader loading={endExamTimetableMutation?.isPending} text="" />
+              ) : (
+                <Ban size={16} />
+              )}
             </Button>
           }
-          message={<span>End Exam</span>}
+          message={<span>End Exam for {TextHelper.capitalizeWords(Session.subject_id.name)}</span>}
         />
 
         <TooltipComponent
           trigger={
-            <Button
-              variant="destructive"
-              size="sm"
-              // onClick={() => onDelete(business.id)}
-            >
+            <Button variant="destructive" size="sm">
               <Trash size={16} />
             </Button>
           }
-          message={<span>Delete Entry</span>}
+          message={<span>Delete {TextHelper.capitalizeWords(Session.subject_id.name)} Exam</span>}
         />
       </div>
       <DropdownMenu>

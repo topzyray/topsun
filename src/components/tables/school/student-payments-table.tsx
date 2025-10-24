@@ -13,7 +13,7 @@ import {
   getSortedRowModel,
   useReactTable,
 } from "@tanstack/react-table";
-import { ArrowUpDown, ChevronDown, MoreHorizontal } from "lucide-react";
+import { ArrowUpDown, ChevronDown, MoreHorizontal, View } from "lucide-react";
 
 import { Button } from "@/components/ui/button";
 import {
@@ -43,6 +43,7 @@ import { useCustomQuery } from "@/api/hooks/queries/use-query.hook";
 import { extractErrorMessage } from "@/utils/extract-error-utils";
 import { TextHelper } from "@/helpers/TextHelper";
 import { useRouter } from "next/navigation";
+import TooltipComponent from "@/components/info/tool-tip";
 
 const ActionCell = ({ row }: { row: any }) => {
   const Session = row.original;
@@ -50,14 +51,19 @@ const ActionCell = ({ row }: { row: any }) => {
 
   return (
     <div className="flex items-center gap-3">
-      <Button
-        size="sm"
-        variant="link"
-        onClick={() => router.push(`fee_payments/${Session._id}`)}
-        className="px-0 text-sm font-normal"
-      >
-        Details
-      </Button>
+      <TooltipComponent
+        trigger={
+          <Button
+            onClick={() => router.push(`fee_payments/${Session._id}`)}
+            variant="outline"
+            size="icon"
+            className="hover:text-primary"
+          >
+            <View size={16} className="hover:text-primary cursor-pointer" />
+          </Button>
+        }
+        message={<span>View Details</span>}
+      />
       <DropdownMenu>
         <DropdownMenuTrigger asChild>
           <Button variant="ghost" className="h-8 w-8 p-0">

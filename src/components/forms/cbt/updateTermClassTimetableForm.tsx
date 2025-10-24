@@ -74,7 +74,7 @@ export function UpdateTermClassTimetableForm({
       },
       params: {
         subject_id: initialData.subject_id?._id,
-        timetable_id: initialData._id,
+        timetable_id: initialData.timetable_id,
       },
     });
   }

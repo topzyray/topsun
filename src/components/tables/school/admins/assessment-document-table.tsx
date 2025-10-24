@@ -13,16 +13,13 @@ import {
   getSortedRowModel,
   useReactTable,
 } from "@tanstack/react-table";
-import { ArrowUpDown, ChevronDown, MoreHorizontal } from "lucide-react";
+import { ArrowUpDown, Ban, ChevronDown, Trash, View } from "lucide-react";
 
 import { Button } from "@/components/ui/button";
 import {
   DropdownMenu,
   DropdownMenuCheckboxItem,
   DropdownMenuContent,
-  DropdownMenuItem,
-  DropdownMenuLabel,
-  DropdownMenuSeparator,
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
 import { Input } from "@/components/ui/input";
@@ -56,22 +53,34 @@ import {
 import { ScrollArea } from "@/components/ui/scroll-area";
 import CancelButton from "@/components/buttons/CancelButton";
 import { Separator } from "@/components/ui/separator";
+import { useQueryClient } from "@tanstack/react-query";
+import { useCustomMutation } from "@/api/hooks/queries/use-mutation.hook";
+import ComponentLevelLoader from "@/components/loaders/component-level-loader";
 
 const ActionCell = ({ row }: { row: any }) => {
   const [openSingleExamDoc, setOpenSingleExamDoc] = React.useState<boolean>(false);
   const Session = row.original;
 
   return (
-    <div className="flex items-center gap-3">
-      <Button
-        size="sm"
-        variant="link"
-        onClick={() => setOpenSingleExamDoc(true)}
-        className="px-0 text-sm font-normal"
-      >
-        Details
-      </Button>
-      <DropdownMenu>
+    <div className="flex items-center gap-1">
+      <TooltipComponent
+        trigger={
+          <Button
+            onClick={() => setOpenSingleExamDoc(true)}
+            variant="outline"
+            size="icon"
+            className="hover:text-primary"
+          >
+            <View size={16} className="hover:text-primary cursor-pointer" />
+          </Button>
+        }
+        message={
+          <span>View Details For {TextHelper.capitalizeWords(Session.assessment_type)}</span>
+        }
+      />
+      <EndAssessmentDocButton assessmentData={Session} />
+      <DeleteAssessmentDocButton assessmentData={Session} />
+      {/* <DropdownMenu>
         <DropdownMenuTrigger asChild>
           <Button variant="ghost" className="h-8 w-8 p-0">
             <span className="sr-only">Open menu</span>
@@ -88,7 +97,7 @@ const ActionCell = ({ row }: { row: any }) => {
           </DropdownMenuItem>
           <DropdownMenuSeparator />
         </DropdownMenuContent>
-      </DropdownMenu>
+      </DropdownMenu> */}
 
       <AssessmentDocumentDetailsModal
         exam_document_id={Session._id}
@@ -564,6 +573,19 @@ function AssessmentDocumentDetailsModal({
                         {TextHelper.getFormattedDate(assessmentDocData?.createdAt)}
                       </TableCell>
                     </TableRow>
+                    <TableRow>
+                      <TableHead>Actions</TableHead>
+                      <TableCell className="space-x-1">
+                        <EndAssessmentDocButton
+                          assessmentData={assessmentDocData}
+                          onClose={onClose}
+                        />
+                        <DeleteAssessmentDocButton
+                          assessmentData={assessmentDocData}
+                          onClose={onClose}
+                        />
+                      </TableCell>
+                    </TableRow>
                   </TableBody>
                 </Table>
               </section>
@@ -588,5 +610,107 @@ function AssessmentDocumentDetailsModal({
         </ScrollArea>
       </DialogContent>
     </Dialog>
+  );
+}
+
+function EndAssessmentDocButton({
+  assessmentData,
+  onClose,
+}: {
+  assessmentData: any;
+  onClose?: () => void;
+}) {
+  const [assessmentKey, setAssessmentKey] = React.useState<string | null>(null);
+  const queryClient = useQueryClient();
+
+  const endAssessmentDocMutation = useCustomMutation(CbtApiService.endTermCbtAssessmentDocument, {
+    onSuccessCallback: () => {
+      queryClient.invalidateQueries({ queryKey: ["assessments"] });
+      if (onClose) {
+        onClose();
+      }
+      setAssessmentKey(null);
+    },
+    onErrorCallback: () => {
+      setAssessmentKey(null);
+    },
+  });
+
+  const handleEndAssessmentDoc = () => {
+    setAssessmentKey(assessmentData?._id);
+    endAssessmentDocMutation.mutate({
+      params: {
+        exam_document_id: assessmentData?._id,
+      },
+    });
+  };
+  return (
+    <TooltipComponent
+      trigger={
+        <Button
+          variant="destructive"
+          size="sm"
+          disabled={
+            (endAssessmentDocMutation.isPending && assessmentKey === assessmentData?._id) ||
+            !assessmentData?.is_active
+          }
+          onClick={handleEndAssessmentDoc}
+        >
+          {endAssessmentDocMutation.isPending && assessmentKey === assessmentData?._id ? (
+            <ComponentLevelLoader
+              loading={endAssessmentDocMutation?.isPending && assessmentKey === assessmentData?._id}
+              darkColor="white"
+              lightColor="white"
+              text=""
+            />
+          ) : (
+            <Ban size={16} />
+          )}
+        </Button>
+      }
+      message={
+        <span>
+          End Assessment Document for {TextHelper.capitalizeWords(assessmentData?.assessment_type)}
+        </span>
+      }
+    />
+  );
+}
+
+function DeleteAssessmentDocButton({
+  assessmentData,
+  onClose,
+}: {
+  assessmentData: any;
+  onClose?: () => void;
+}) {
+  const [assessmentKey, setAssessmentKey] = React.useState<string | null>(null);
+  const queryClient = useQueryClient();
+
+  const endAssessmentDocMutation = useCustomMutation(CbtApiService.endTermCbtAssessmentDocument, {
+    onSuccessCallback: () => {
+      queryClient.invalidateQueries({ queryKey: ["assessments"] });
+      if (onClose) {
+        onClose();
+      }
+      setAssessmentKey(null);
+    },
+    onErrorCallback: () => {
+      setAssessmentKey(null);
+    },
+  });
+
+  const handleEndAssessmentDoc = () => {};
+  return (
+    <TooltipComponent
+      trigger={
+        <Button variant="destructive" size="sm" disabled>
+          <Trash size={16} />
+        </Button>
+      }
+      message={
+        <span>Delete {TextHelper.capitalizeWords(assessmentData.assessment_type)} Assessment</span>
+      }
+    />
   );
 }

@@ -13,7 +13,7 @@ interface ResultSheetProps {
   psychomotorSkills?: string[];
 }
 
-export default function ResultSheet({
+export function ResultSheet({
   logoSrc = "/logo.png",
   subjects = [
     "Mathematics",
