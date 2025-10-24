@@ -7,14 +7,11 @@ import { AssessmentsDocumentTable } from "@/components/tables/school/admins/asse
 import { useAuth } from "@/api/hooks/use-auth.hook";
 import { RoleTypeEnum } from "@/api/enums/RoleTypeEnum";
 import { useRouter } from "next/navigation";
-import { toast } from "react-hot-toast";
-import { InfoIcon } from "lucide-react";
 import { useContext } from "react";
 import { GlobalContext } from "@/providers/global-state-provider";
 import { useCustomMutation } from "@/api/hooks/queries/use-mutation.hook";
 import { CbtApiService } from "@/api/services/CbtApiService";
 import { useQueryClient } from "@tanstack/react-query";
-import ComponentLevelLoader from "@/components/loaders/component-level-loader";
 import SubmitButton from "@/components/buttons/SubmitButton";
 
 export default function CbtComponent() {
@@ -29,6 +26,7 @@ export default function CbtComponent() {
     {
       onSuccessCallback: () => {
         queryClient.invalidateQueries({ queryKey: ["assessments"] });
+        queryClient.invalidateQueries({ queryKey: ["studentById"] });
       },
     },
   );
