@@ -7,25 +7,38 @@ import { AssessmentsDocumentTable } from "@/components/tables/school/admins/asse
 import { useAuth } from "@/api/hooks/use-auth.hook";
 import { RoleTypeEnum } from "@/api/enums/RoleTypeEnum";
 import { useRouter } from "next/navigation";
-import { toast } from "react-hot-toast";
-import { InfoIcon } from "lucide-react";
+import { useContext } from "react";
+import { GlobalContext } from "@/providers/global-state-provider";
+import { useCustomMutation } from "@/api/hooks/queries/use-mutation.hook";
+import { CbtApiService } from "@/api/services/CbtApiService";
+import { useQueryClient } from "@tanstack/react-query";
+import SubmitButton from "@/components/buttons/SubmitButton";
 
 export default function CbtComponent() {
-  // const [openCreateCutOffMinutesForm, setOpenCreateCutOffMinutesForm] = useState(false);
   const { userDetails } = useAuth();
+  const queryClient = useQueryClient();
+  const { activeSessionData } = useContext(GlobalContext);
 
   const router = useRouter();
 
-  // const handleEndAllAssessments = () => {
-  //   // TODO
-  //   // Add all the logic to end all assessments
-  //   toast("This feature is pending!", {
-  //     style: {
-  //       backgroundColor: "lightgreen",
-  //     },
-  //     icon: <InfoIcon size={15} />,
-  //   });
-  // };
+  const endAllActiveAssessmentDocMutation = useCustomMutation(
+    CbtApiService.endAllActiveTermCbtAssessmentDocumentsInATerm,
+    {
+      onSuccessCallback: () => {
+        queryClient.invalidateQueries({ queryKey: ["assessments"] });
+        queryClient.invalidateQueries({ queryKey: ["studentById"] });
+      },
+    },
+  );
+
+  const handleEndAllAssessments = () => {
+    endAllActiveAssessmentDocMutation.mutate({
+      requestBody: {
+        academic_session_id: activeSessionData?.activeSession?._id as string,
+        term: activeSessionData?.activeTerm?.name as string,
+      },
+    });
+  };
 
   return (
     <div className="flex flex-col gap-4">
@@ -40,9 +53,14 @@ export default function CbtComponent() {
             <Button onClick={() => router.push("cbt/create_assessment_document")} type="button">
               Create Assessment Document
             </Button>
-            {/* <Button onClick={handleEndAllAssessments} type="button">
-              End All Assessments
-            </Button> */}
+
+            <SubmitButton
+              type="button"
+              loading={endAllActiveAssessmentDocMutation.isPending}
+              disabled={endAllActiveAssessmentDocMutation.isPending}
+              onSubmit={handleEndAllAssessments}
+              text="End All Assessments"
+            />
           </div>
         </>
       )}

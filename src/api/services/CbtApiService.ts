@@ -235,4 +235,19 @@ export class CbtApiService {
     );
     return response.data;
   }
+
+  public static async endAllActiveTermCbtAssessmentDocumentsInATerm({
+    requestBody,
+  }: {
+    requestBody: {
+      term: string;
+      academic_session_id: string;
+    };
+  }) {
+    const response = await HttpClient.getClient().put(
+      `${cbtRoutes.endAllActiveTermCbtAssessmentDocumentsInATerm}`,
+      requestBody,
+    );
+    return response.data;
+  }
 }

@@ -649,7 +649,7 @@ function EndAssessmentDocButton({
       trigger={
         <Button
           variant="destructive"
-          size="sm"
+          size="icon"
           disabled={
             (endAssessmentDocMutation.isPending && assessmentKey === assessmentData?._id) ||
             !assessmentData?.is_active
@@ -704,7 +704,7 @@ function DeleteAssessmentDocButton({
   return (
     <TooltipComponent
       trigger={
-        <Button variant="destructive" size="sm" disabled>
+        <Button variant="destructive" size="icon" disabled>
           <Trash size={16} />
         </Button>
       }

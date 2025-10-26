@@ -20,7 +20,8 @@ type ICbtApi =
   | "getAllClassCbtAssessmentTimetables"
   | "updateClassCbtTimetable"
   | "endTakingASubjectInATimetableForATerm"
-  | "endTermCbtAssessmentDocument";
+  | "endTermCbtAssessmentDocument"
+  | "endAllActiveTermCbtAssessmentDocumentsInATerm";
 
 const rawCbtRoutes: Record<ICbtApi, string> = {
   createTermExamDocumentInASchool: "/cbt/create-term-exam-document",
@@ -41,6 +42,7 @@ const rawCbtRoutes: Record<ICbtApi, string> = {
   updateClassCbtTimetable: "/cbt/update-term-class-exam-timetable",
   endTakingASubjectInATimetableForATerm: "/cbt/end-subject-term-class-exam-timetable",
   endTermCbtAssessmentDocument: "/cbt/end-term-exam-document",
+  endAllActiveTermCbtAssessmentDocumentsInATerm: "/cbt/end-all-active-term-exam-documents",
 };
 
 // Use the function to create routes with the base path
