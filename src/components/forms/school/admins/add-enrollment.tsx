@@ -36,6 +36,7 @@ import {
   DialogTitle,
 } from "@/components/ui/dialog";
 import { Separator } from "@/components/ui/separator";
+import toast from "react-hot-toast";
 
 export type EnrollmentData = {
   students: {
@@ -113,6 +114,10 @@ export default function AddNewEnrollment({
   );
 
   async function onSubmit(data: z.infer<typeof AddNewEnrollmentFormSchema>) {
+    if (activeSessionData?.activeTerm?.name) {
+      toast.error("Please create a term to proceed!");
+      return;
+    }
     const subjectIds = DataHelper.getMatchingValues(
       classSubjectData,
       data.subjects_to_offer_array,
@@ -122,12 +127,11 @@ export default function AddNewEnrollment({
 
     const processed_data = {
       level: data?.level,
-      student_id: enrollmentData?.students?.students
-        .filter((item: Student) => item.admission_number == data.admission_number)
-        .map((item: Student) => item._id)[0] as string,
-      class_id: enrollmentData?.classes?.classes
-        .filter((item: Class) => item.name == data.class_name)
-        .map((item: Class) => item._id)[0] as string,
+      student_id: enrollmentData?.students?.students.find(
+        (item: Student) => item.admission_number == data.admission_number,
+      )?._id as string,
+      class_id: enrollmentData?.classes?.classes.find((item: Class) => item.name == data.class_name)
+        ?._id as string,
       academic_session_id: activeSessionData?.activeSession?._id as string,
       term: activeSessionData?.activeTerm?.name as string,
       subjects_to_offer_array: subjectIds,
