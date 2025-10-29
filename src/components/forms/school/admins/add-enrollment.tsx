@@ -114,7 +114,7 @@ export default function AddNewEnrollment({
   );
 
   async function onSubmit(data: z.infer<typeof AddNewEnrollmentFormSchema>) {
-    if (activeSessionData?.activeTerm?.name) {
+    if (!activeSessionData?.activeTerm?.name) {
       toast.error("Please create a term to proceed!");
       return;
     }
